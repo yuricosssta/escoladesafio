@@ -9,13 +9,18 @@ RUN npm install
 COPY . .
 
 ARG MONGO_URI
+ARG JWT_SECRET
 
 ENV MONGO_URI=$MONGO_URI
+ENV JWT_SECRET=$JWT_SECRET
 
-RUN echo "MONGO_URI=${MONGO_URI}" > .env && echo "PORT=3333" >> .env
+RUN echo "MONGO_URI=${MONGO_URI}" > .env 
+RUN echo "JWT_SECRET=${JWT_SECRET}}" > .env
 
-RUN npm run build
+RUN npm i -g pnpm
 
-EXPOSE 3333
+RUN pnpm build
+
+EXPOSE 3010
 
 CMD ["node", "dist/src/main"]
