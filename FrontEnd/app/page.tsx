@@ -15,6 +15,7 @@ export default async function Page() {
         <p>Posts aqui</p>
         
         {/* Passando corretamente o array de posts */}
+        
         <PostsPreview posts={posts} />
 
         <Footer />
