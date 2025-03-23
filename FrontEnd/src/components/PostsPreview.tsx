@@ -10,10 +10,10 @@ export function PostsPreview({ posts }: PostsPreviewProps) {
   return (
     <div className={cn("grid grid-cols-1 gap-16 lg:gap-28 md:grid-cols-2 md:my-16 my-8")}>
       {posts.length > 0 ? (
-        posts.map((post) => (
-          <a key={post.id} href={`/posts/${post.id}`}>
-            
-            <PostPreview post={post} />
+        posts.map((posts) => (
+          
+          <a key={posts.id} href={`/posts/${posts.id}`} >            
+            <PostPreview post={posts} />
           </a> 
         ))
       ) : (

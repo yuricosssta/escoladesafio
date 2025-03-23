@@ -2,6 +2,7 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { PostsRepository } from "@/repositories/PostsRepository";
 import { PostsPreview } from "@/components/PostsPreview";
+import NotFound from "./not-found";
 
 const postsRepository = new PostsRepository();
 
@@ -13,9 +14,9 @@ export default async function Page() {
       <div className="container mx-auto px-5 mb-10">
         <Header />
         <p>Posts aqui</p>
-        
+
         {/* Passando corretamente o array de posts */}
-        
+
         <PostsPreview posts={posts} />
 
         <Footer />
@@ -23,6 +24,13 @@ export default async function Page() {
     );
   } catch (error) {
     console.error("Erro ao buscar posts:", error);
-    return <div>Erro ao carregar os posts.</div>;
+    return (
+      <div className="container mx-auto px-5 mb-10">
+        <Header />
+        <NotFound />
+        <Footer />
+      </div>
+
+    )
   }
 }
