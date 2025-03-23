@@ -4,8 +4,20 @@ import urlJoin from "url-join";
 import { IPost } from "@/lib/types/IPost";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/posts`);
-  const posts: IPost[] = await response.json();
+  let posts: IPost[] = [];
+
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/posts`);
+    const data = await response.json();
+
+    if (Array.isArray(data)) {
+      posts = data;
+    } else {
+      console.error("Resposta da API não é um array:", data);
+    }
+  } catch (error) {
+    console.error("Erro ao buscar posts:", error);
+  }
 
   return [
     {
@@ -13,11 +25,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       priority: 0.8,
     },
-    ...posts.map((post) => ({
-      url: urlJoin(config.baseUrl, "blog", generateSlug(post.title)), // Geramos o slug a partir do título
-      lastModified: new Date(post.modified_at || post.created_at || new Date()),
-      priority: 0.8,
-    })),
+    ...posts.map((post) => {
+      const lastModified = post.modified_at || post.created_at;
+      const lastModifiedDate = lastModified ? new Date(lastModified) : new Date();
+      const slug = generateSlug(post.title || "sem-titulo");
+
+      return {
+        url: urlJoin(config.baseUrl, "blog", slug),
+        lastModified: lastModifiedDate,
+        priority: 0.8,
+      };
+    }),
   ];
 }
 
