@@ -1,7 +1,7 @@
 import { IPost } from "@/lib/types/IPost";
 
 export class PostsRepository {
-  private baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  private baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL; 
   //private authToken = process.env.TMDB_API_TOKEN ?? "";
 
   async request<T>(url: string, options: RequestInit = {}): Promise<T> {
