@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function PostPreview({ post }: { post: IPost }) {
   return (
     <div className="break-words border p-4 rounded-lg shadow-md">
-      <Link href={`/post/${post.id}`}>
+      <Link href={`/posts/${post.id}`}>
         <div className="aspect-[16/9] relative">
           <Image
             alt={post.title}
@@ -18,7 +18,7 @@ export default function PostPreview({ post }: { post: IPost }) {
       </Link>
       <div className="mt-4">
         <h2 className="font-bold text-xl">
-          <Link href={`/post/${post.id}`}>{post.title}</Link>
+          <Link href={`/posts/${post.id}`}>{post.title}</Link>
         </h2>
         <p className="text-gray-600">{post.description}</p>
       </div>

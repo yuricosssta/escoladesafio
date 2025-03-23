@@ -1,6 +1,7 @@
 "use client";
 import { IPost } from "@/lib/types/IPost";
 import sanitize, { defaults } from "sanitize-html";
+import NotFound, {} from "../../app/not-found"
 
 export const PostContent = ({ content }: { content: string }) => {
   const sanitizedContent = sanitize(content, {
@@ -23,8 +24,8 @@ export const PostContent = ({ content }: { content: string }) => {
   );
 };
 
-export const BlogPostContent = ({ post }: { post: IPost }) => {
-  if (!post) return null;
+export const BlogPostContent = ({ post }: { post: IPost | null }) => {
+  if (!post) return <p>Página não encontrada</p>;
 
   return (
     <div>

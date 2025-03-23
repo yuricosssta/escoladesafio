@@ -4,15 +4,16 @@ import { Header } from "@/components/Header";
 import { PostsRepository } from "@/repositories/PostsRepository";
 import { notFound } from "next/navigation";
 
+
 type PageProps = {
-  params: Promise<{ postId: string }>
+  params: Promise<{ id: string }>
 };
 
 const postRepository = new PostsRepository();
 
 export default async function Page({ params }: PageProps) {
-  const { postId } = await params;
-  const post = await postRepository.getPost(postId);
+  const { id } = await params;
+  const post = await postRepository.getPost(id);
 
   return (
     <>
@@ -23,8 +24,7 @@ export default async function Page({ params }: PageProps) {
       <div className="container mx-auto px-5">
         <Header />
         <div className="max-w-prose mx-auto text-xl">
-          <BlogPostContent post={post} />
-
+        {post ? <BlogPostContent post={post} /> : <p>Post não encontrado.</p>}
         </div>
         <Footer />
       </div>

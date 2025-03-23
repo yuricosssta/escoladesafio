@@ -11,9 +11,10 @@ export function PostsPreview({ posts }: PostsPreviewProps) {
     <div className={cn("grid grid-cols-1 gap-16 lg:gap-28 md:grid-cols-2 md:my-16 my-8")}>
       {posts.length > 0 ? (
         posts.map((post) => (
-          <a key={post.id} href={`/post/${post.id}`}>
+          <a key={post.id} href={`/posts/${post.id}`}>
+            
             <PostPreview post={post} />
-          </a> // ✅ Agora a tag <a> está corretamente fechada
+          </a> 
         ))
       ) : (
         <p>Nenhum post encontrado.</p>

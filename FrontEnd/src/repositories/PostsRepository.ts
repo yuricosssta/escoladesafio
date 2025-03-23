@@ -31,14 +31,40 @@ export class PostsRepository {
   }
 
 
-  async getPost(id: string | number) {
+  /*async getPost(id: string | number){
     const posts = await this.request<IPost>(
-      `/post/${id}`,
+      `/posts/${id}`,
       this.getRequestHeaders()
     );
 
     return posts;
-  }
+  }*/
+
+    async getPost(id: string | number): Promise<IPost | null> {
+      if (!id || typeof id !== "string") {  // 🔹 Garante que ID seja uma string válida
+        console.error("Erro: ID inválido passado para getPost.", id);
+        return null;
+      }
+    
+      if (!this.baseUrl) {
+        console.error("Erro: NEXT_PUBLIC_API_BASE_URL não está definido.");
+        throw new Error("Erro interno: URL da API não configurada.");
+      }
+    
+      try {
+        const post = await this.request<IPost>(`/posts/${id}`, this.getRequestHeaders());
+    
+        if (!post) {
+          console.warn(`Post com ID ${id} não encontrado.`);
+          return null;
+        }
+    
+        return post;
+      } catch (error) {
+        console.error(`Erro ao buscar post ${id}:`, error);
+        return null;
+      }
+    }
 
   /*async searchPost(query: string) {
     const posts = await this.request<TTMDBApiResponse>(
