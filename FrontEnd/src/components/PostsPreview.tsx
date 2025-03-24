@@ -13,7 +13,7 @@ export function PostsPreview({ posts }: PostsPreviewProps) {
         posts.map((posts) => (
           
           <a key={posts.id} href={`/posts/${posts.id}`} >            
-            <PostPreview post={posts} />
+            <PostPreview key={posts.id} post={posts} />
           </a> 
         ))
       ) : (

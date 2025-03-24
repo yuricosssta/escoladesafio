@@ -25,8 +25,3 @@ export default function PostPreview({ post }: { post: IPost }) {
     </div>
   );
 }
-
-
-//  {/*{post.modified_at || post.created_at
- //             ? format(new Date(post.modified_at || post.created_at), "dd MMMM yyyy")
- //             : "Data não disponível"}*/}

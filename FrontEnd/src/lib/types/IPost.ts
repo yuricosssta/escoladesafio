@@ -5,5 +5,6 @@ export interface IPost {
     created_at?: Date;
     modified_at?: Date;
     image?: string;
+    author?: string;
   }
   
