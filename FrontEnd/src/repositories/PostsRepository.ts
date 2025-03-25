@@ -1,6 +1,83 @@
 import { IPost } from "@/lib/types/IPost";
 
 export class PostsRepository {
+  private baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+  async request<T>(url: string, options: RequestInit = {}): Promise<T> {
+    if (!this.baseUrl) {
+      throw new Error("API base URL não configurada");
+    }
+
+    const response = await fetch(`${this.baseUrl}${url}`, options);
+    
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.message || "Falha na requisição");
+    }
+
+    return response.json();
+  }
+
+  getRequestHeaders(): RequestInit {
+    return {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+  }
+
+  async getPosts(): Promise<IPost[]> {
+    try {
+      const data = await this.request<any[]>("/posts", this.getRequestHeaders());
+      
+      // Mapeamento seguro dos dados
+      return data.map(item => this.transformPost(item));
+    } catch (error) {
+      console.error("Erro ao buscar posts:", error);
+      return [];
+    }
+  }
+
+  async getPost(id: string): Promise<IPost | null> {
+    if (!id) {
+      console.error("ID inválido fornecido");
+      return null;
+    }
+
+    try {
+      const data = await this.request<any>(`/posts/${id}`, this.getRequestHeaders());
+      return this.transformPost(data);
+    } catch (error) {
+      console.error(`Erro ao buscar post ${id}:`, error);
+      return null;
+    }
+  }
+
+  // Método para transformar dados brutos em IPost
+  private transformPost(data: any): IPost {
+    if (!data.id && !data._id) {
+      console.warn("Post sem ID encontrado:", data);
+      throw new Error("Dados do post inválidos: ID ausente");
+    }
+
+    return {
+      id: data.id || data._id, // Suporta tanto 'id' quanto '_id'
+      title: data.title || "",
+      description: data.description || "",
+      created_at: data.created_at ? new Date(data.created_at) : new Date(),
+      modified_at: data.modified_at ? new Date(data.modified_at) : undefined,
+      image: data.image || undefined,
+      author: data.author || undefined,
+    };
+  }
+}
+
+
+/*
+import { IPost } from "@/lib/types/IPost";
+
+export class PostsRepository {
   private baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL; 
   //private authToken = process.env.TMDB_API_TOKEN ?? "";
 
@@ -38,7 +115,7 @@ export class PostsRepository {
     );
 
     return posts;
-  }*/
+  }
 
     async getPost(id: string | number): Promise<IPost | null> {
       if (!id || typeof id !== "string") {  // 🔹 Garante que ID seja uma string válida
@@ -91,7 +168,7 @@ export class PostsRepository {
     );
  
     return movies;
-  }*/
+  }
 
 
-}
+}*/

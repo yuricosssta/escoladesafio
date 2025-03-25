@@ -4,6 +4,7 @@ import { PostsRepository } from "@/repositories/PostsRepository";
 import { PostsPreview } from "@/components/PostsPreview";
 import NotFound from "./not-found";
 import { PostList } from "@/components/PostList";
+import { PostProvider } from "@/context/Context"
 
 const postsRepository = new PostsRepository();
 
@@ -12,12 +13,14 @@ export default async function Page() {
     const result = await postsRepository.getPosts(); // Obtém todos os posts
 
     return (
-      <div className="container mx-auto px-5 mb-10">
+      
+      <div className="container mx-auto px-5 mb-10"> 
         <Header />
         <p>Posts aqui</p>
         <PostList posts={result} />
         <Footer />
       </div>
+      
     );
   } catch (error) {
     console.error("Erro ao buscar posts:", error);
