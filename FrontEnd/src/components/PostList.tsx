@@ -38,10 +38,14 @@ export const PostList = ({ posts }: { posts: PostsPreviewProps["posts"] }) => {
             <div className="prose lg:prose-lg leading-relaxed md:text-lg line-clamp-4 text-muted-foreground">
               {post.description}
             </div>
+            <Link href={`/posts/${post.id}/edit`} className="btn btn-sm btn-secondary">
+                  Editar
+                </Link>
             <div className="flex items-center gap-2">
               <div className="font-medium">
-                {post.author} | Publicado em {""}
+                {post.author} | Publicado em {formatFullDate(post.modified_at)}
               </div>
+              
             </div>
           </div>
         </div>

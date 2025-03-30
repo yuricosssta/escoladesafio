@@ -2,6 +2,7 @@
 import { IPost } from "@/lib/types/IPost";
 import sanitize, { defaults } from "sanitize-html";
 import NotFound, {} from "../../app/not-found"
+import Link from "next/link";
 
 export const PostContent = ({ content }: { content: string }) => {
   const sanitizedContent = sanitize(content, {
@@ -38,6 +39,9 @@ export const BlogPostContent = ({ post }: { post: IPost | null }) => {
             new Date(post.modified_at || post.created_at || new Date())
           )}
         </div>
+        <Link href={`/posts/${post.id}/edit`} className="btn btn-secondary">
+          Editar
+        </Link>
       </div>
     </div>
   );

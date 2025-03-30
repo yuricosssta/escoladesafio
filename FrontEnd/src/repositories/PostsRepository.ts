@@ -9,7 +9,7 @@ export class PostsRepository {
     }
 
     const response = await fetch(`${this.baseUrl}${url}`, options);
-    
+
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       throw new Error(errorData.message || "Falha na requisição");
@@ -30,7 +30,7 @@ export class PostsRepository {
   async getPosts(): Promise<IPost[]> {
     try {
       const data = await this.request<any[]>("/posts", this.getRequestHeaders());
-      
+
       // Mapeamento seguro dos dados
       return data.map(item => this.transformPost(item));
     } catch (error) {
@@ -71,6 +71,37 @@ export class PostsRepository {
       author: data.author || undefined,
     };
   }
+
+  // CREATE
+  async createPost(postData: Omit<IPost, 'id' | 'created_at' | 'updated_at'>): Promise<IPost> {
+    return this.request<IPost>('/posts', {
+      method: 'POST',
+      body: JSON.stringify(postData),
+    });
+  }
+
+  // UPDATE
+  async updatePost(id: string, postData: Partial<IPost>): Promise<IPost> {
+    return this.request<IPost>(`/posts/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(postData),
+    });
+  }
+
+  // DELETE
+  async deletePost(id: string): Promise<void> {
+    await this.request<void>(`/posts/${id}`, {
+      method: 'DELETE',
+    });
+  }
+
+  // PUBLISH/UNPUBLISH
+  async togglePublish(id: string): Promise<IPost> {
+    return this.request<IPost>(`/posts/${id}/toggle-publish`, {
+      method: 'PATCH',
+    });
+  }
+
 }
 
 
