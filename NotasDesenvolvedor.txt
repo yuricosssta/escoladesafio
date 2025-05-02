@@ -1,0 +1,33 @@
+NOTAS DO DESENVOLVEDOR DURANTE O DESENVOLVIMENTO
+
+-----
+01/05/2025
+Foi criado o PostList e configurado para ele requerer os posts, colocar eles em ordem dos mais recentes e busca por palavras chaves.
+
+-----
+29/04/2025
+Terminar de fazer a mistura entre stack navigator com o Bottom tab navigator.
+Foi inserido o endereço da API (API_BASE_URL) em app.config.ts, este faz a função do dotenv no Next.
+
+-----
+26/04/2025
+Configurada a estrutura geral do projeto. Início de conexão com API.
+<npx expo install axios>
+<npm i @react-native-picker/picker>
+
+
+------
+25/04/2025
+<npx create-expo-app@latest --template react-navigation/template>
+Este comando cria um app com template do react navigation.
+
+Instalando o react navigation no projeto.
+<npm install @react-navigation/native @react-navigation/native-stack>
+
+Instalando dependencias com o Expo
+<npx expo install react-native-screens react-native-safe-area-context>
+
+Instala um biblioteca de elementos para navegação:
+<npm install @react-navigation/elements>
+
+
