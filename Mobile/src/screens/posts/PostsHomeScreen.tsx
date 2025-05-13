@@ -5,13 +5,24 @@ import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { getPosts } from '../../lib/api/posts';
 import { IPost } from '../../lib/types/IPost';
 import PostList from '../../components/PostList';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { PostsStackParamList } from '../../navigation/types';
+import FloatingActionButton from '../../components/FloatingActionButton';
+
 
 export default function PostsHomeScreen() {
- 
+  const navigation = useNavigation<NativeStackNavigationProp<PostsStackParamList>>();
+
+  const handleCreatePost = () => {
+    navigation.navigate('PostEdit', { postId: '' }); // você pode ajustar os parâmetros conforme necessário
+  };
+
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
       <PostList />
+      <FloatingActionButton onPress={handleCreatePost} />
       </SafeAreaView>
     </SafeAreaProvider>
   );

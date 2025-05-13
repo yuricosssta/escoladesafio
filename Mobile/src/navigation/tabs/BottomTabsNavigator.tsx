@@ -2,14 +2,14 @@
 
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import PostsScreen from '../screens/posts/PostsHomeScreen';
-import SettingsScreen from '../screens/settings/SettingsScreen';
-import { RootStackParamList } from './types';
+import PostsScreen from '../../screens/posts/PostsHomeScreen';
+import SettingsScreen from '../../screens/settings/SettingsScreen';
+import { BottomTabsParamList, RootStackParamList } from '../types';
 import { Ionicons } from '@expo/vector-icons';
-import PostsStackNavigator from './PostsNavigator';
-import SettingsStackNavigator from './SettingsStackNavigator';
+import PostsStackNavigator from '../stacks/PostsStackNavigator';
+import SettingsStackNavigator from '../stacks/SettingsStackNavigator';
 
-const Tab = createBottomTabNavigator<RootStackParamList>();
+const Tab = createBottomTabNavigator<BottomTabsParamList>();
 
 export default function BottomTabsNavigator() {
   return (

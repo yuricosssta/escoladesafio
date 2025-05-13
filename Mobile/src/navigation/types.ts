@@ -2,12 +2,12 @@
 
 export type PostsStackParamList = {
   PostsHome: undefined;
-  PostEdit: { postId: number; otherParam: string };
-  PostDetails: { postId: number };
+  PostEdit: { postId?: string };// otherParam: string };
+  PostDetails: { postId: string };
 };
 
 export type SettingsStackParamList = {
-  Settings: undefined;
+  SettingsHome: undefined;
   Profile: undefined;
   Teachers: undefined;
   TeacherDetails: { teacherId: number };
@@ -23,7 +23,12 @@ export type UserStackParamList = {
 };
 
 export type RootStackParamList = {
+  MainTabs: undefined;
+  // SettingsTab: undefined;
+  Login: undefined;
+};
+
+export type BottomTabsParamList = {
   PostsTab: undefined;
   SettingsTab: undefined;
-  Login: undefined;
 };

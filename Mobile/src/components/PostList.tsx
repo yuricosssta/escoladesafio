@@ -6,15 +6,21 @@ import {
     Text,
     StyleSheet,
     ActivityIndicator,
+    TouchableOpacity,
 } from 'react-native';
 import { IPost } from '../lib/types/IPost';
 import { getPosts } from '../lib/api/posts';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { PostsStackParamList } from '../navigation/types';
 
 export default function PostList() {
     const [posts, setPosts] = useState<IPost[]>([]);
     const [filteredPosts, setFilteredPosts] = useState<IPost[]>([]);
     const [searchText, setSearchText] = useState('');
     const [loading, setLoading] = useState(true);
+
+    const navigation = useNavigation<NativeStackNavigationProp<PostsStackParamList>>();
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -24,7 +30,7 @@ export default function PostList() {
                     new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
 
                 setPosts(sorted);
-                setFilteredPosts(sorted); // mostrar tudo inicialmente
+                setFilteredPosts(sorted);
             } catch (error) {
                 console.error('Erro ao buscar posts:', error);
             } finally {
@@ -36,7 +42,6 @@ export default function PostList() {
     }, []);
 
     useEffect(() => {
-
         const filtered = posts.filter(post =>
             (post.title?.toLowerCase() ?? '').includes(searchText.toLowerCase()) ||
             (post.description?.toLowerCase() ?? '').includes(searchText.toLowerCase()) ||
@@ -69,11 +74,16 @@ export default function PostList() {
                 keyExtractor={item => item.id}
                 keyboardShouldPersistTaps="handled"
                 renderItem={({ item }) => (
-                    <View style={styles.item}>
+                    <TouchableOpacity
+                        style={styles.item}
+                        onPress={() => navigation.navigate('PostDetails', { postId: (item.id) })}
+                    >
                         <Text style={styles.title}>{item.title}</Text>
                         <Text style={styles.textBody}>{item.author}</Text>
-                        <Text style={styles.textBody} numberOfLines={3}>{item.content}</Text>
-                    </View>
+                        <Text style={styles.textBody} numberOfLines={3}>
+                            {item.content}
+                        </Text>
+                    </TouchableOpacity>
                 )}
             />
         </View>

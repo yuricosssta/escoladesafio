@@ -1,6 +1,10 @@
 NOTAS DO DESENVOLVEDOR DURANTE O DESENVOLVIMENTO
 
 -----
+13/05/2025
+O id de um post não está sendo enviado corretamente para a PostDetails. 
+
+-----
 12/05/2025
 Dockercompose ajustado. Rotas já adequadas. Terminar de fazer as outras telas.
 
