@@ -2,12 +2,14 @@
 
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import HomeScreen from '../screens/HomeScreen';
-import SettingsScreen from '../screens/SettingsScreen';
-import { RootParamList } from './types';
+import PostsScreen from '../screens/posts/PostsHomeScreen';
+import SettingsScreen from '../screens/settings/SettingsScreen';
+import { RootStackParamList } from './types';
 import { Ionicons } from '@expo/vector-icons';
+import PostsStackNavigator from './PostsNavigator';
+import SettingsStackNavigator from './SettingsStackNavigator';
 
-const Tab = createBottomTabNavigator<RootParamList>();
+const Tab = createBottomTabNavigator<RootStackParamList>();
 
 export default function BottomTabsNavigator() {
   return (
@@ -17,9 +19,9 @@ export default function BottomTabsNavigator() {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName: any;
 
-          if (route.name === 'Home') {
+          if (route.name === 'PostsTab') {
             iconName = focused ? 'home' : 'home-outline';
-          } else if (route.name === 'Settings') {
+          } else if (route.name === 'SettingsTab') {
             iconName = focused ? 'settings' : 'settings-outline';
           }
 
@@ -27,10 +29,10 @@ export default function BottomTabsNavigator() {
         },
         tabBarActiveTintColor: 'tomato',
         tabBarInactiveTintColor: 'gray',
-      })}
+      })} 
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Settings" component={SettingsScreen} />
+      <Tab.Screen name="PostsTab" component={PostsStackNavigator} options={{title: 'Escola Desafio'}}/>
+      <Tab.Screen name="SettingsTab" component={SettingsStackNavigator} options={{title: 'Confifurações'}}/>
     </Tab.Navigator>
   );
 }

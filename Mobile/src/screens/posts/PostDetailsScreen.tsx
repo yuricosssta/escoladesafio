@@ -1,7 +1,7 @@
 // src/screens/DetailsScreen.tsx
 
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { PostsStackParamList, RootParamList } from '../navigation/types';
+import { PostsStackParamList, RootParamList } from '../../navigation/types';
 import { View, Text, Button } from 'react-native';
 import React from 'react';
 

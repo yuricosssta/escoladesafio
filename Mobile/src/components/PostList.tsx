@@ -65,6 +65,7 @@ export default function PostList() {
             />
             <FlatList
                 data={filteredPosts}
+                initialNumToRender={5}
                 keyExtractor={item => item.id}
                 keyboardShouldPersistTaps="handled"
                 renderItem={({ item }) => (

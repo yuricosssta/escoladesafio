@@ -1,7 +1,7 @@
 // src/navigation/types.ts
 
 export type PostsStackParamList = {
-  Home: undefined;
+  PostsHome: undefined;
   PostEdit: { postId: number; otherParam: string };
   PostDetails: { postId: number };
 };
@@ -15,12 +15,15 @@ export type SettingsStackParamList = {
   StudentDetails: { studentId: number };
 };
 
-export type RootParamList = {
-  Home: undefined;  
-  Settings: undefined;  
-  Login: undefined;
+export type UserStackParamList = {
   Register: undefined;
   ForgotPassword: undefined;
   ResetPassword: undefined;
   ChangePassword: undefined;
+};
+
+export type RootStackParamList = {
+  PostsTab: undefined;
+  SettingsTab: undefined;
+  Login: undefined;
 };
