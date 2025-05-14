@@ -30,58 +30,32 @@ export const getPostById = async (id: string): Promise<IPost> => {
   return transformPost(response.data);
 };
 
-// export const getPostById = async (id: string): Promise<IPost> => {
-//   const response = await axios.get<IPost>(`${API_BASE_URL}/posts/${id}`);
-//   console.log('Post ID:', response.data.id);
+// Criação de novo post
+export const createPost = async (post: Partial<IPost>): Promise<IPost> => {
+  const response = await axios.post(`${API_BASE_URL}/posts`, post);
 
-//   return response.data;
-// };
+  if (response.status !== 201 && response.status !== 200) {
+    throw new Error('Erro ao criar o post');
+  }
 
+  const postData = {
+    title: post.title,
+    description: post.description,
+    content: post.content,
+    image: post.image,
+  }
+  console.log('Enviando post:', postData);
 
-// async getPost(id: string): Promise<IPost | null> {
-//     if (!id) {
-//       console.error("ID inválido fornecido");
-//       return null;
-//     }
+  return response.data;
+};
 
-//     try {
-//       const data = await this.request<any>(`/posts/${id}`, this.getRequestHeaders());
-//       return this.transformPost(data);
-//     } catch (error) {
-//       console.error(`Erro ao buscar post ${id}:`, error); 
-//       return null;
-//     }
-//   }
+// Atualização de post existente
+export const updatePost = async (id: string, post: Partial<IPost>): Promise<IPost> => {
+  const response = await axios.put(`${API_BASE_URL}/posts/${id}`, post);
 
-//   // Método para transformar dados brutos em IPost
-//   private transformPost(data: any): IPost {
-//     if (!data.id && !data._id) {
-//       console.warn("Post sem ID encontrado:", data);
-//       throw new Error("Dados do post inválidos: ID ausente");
-//     }
+  if (response.status !== 200) {
+    throw new Error('Erro ao atualizar o post');
+  }
 
-//     return {
-//       id: data.id || data._id, // Suporta tanto 'id' quanto '_id'
-//       title: data.title || "",
-//       description: data.description || "",
-//       created_at: data.created_at ? new Date(data.created_at) : new Date(),
-//       modified_at: data.modified_at ? new Date(data.modified_at) : undefined,
-//       image: data.image || undefined,
-//       author: data.author || undefined,
-//     };
-//   }
-
-
-// export async function getPostById(id: string): Promise<IPost | null> {
-//   try {
-//     const response = await fetch(`${API_BASE_URL}/posts/${id}`);
-//     if (!response.ok) {
-//       throw new Error("Post não encontrado");
-//     }
-//     const post: IPost = await response.json();
-//     return post;
-//   } catch (error) {
-//     console.error("Erro ao buscar post:", error);
-//     return null;
-//   }
-// }
+  return response.data;
+};

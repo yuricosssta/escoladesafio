@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
     TextInput,
     FlatList,
@@ -13,6 +13,7 @@ import { getPosts } from '../lib/api/posts';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { PostsStackParamList } from '../navigation/types';
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function PostList() {
     const [posts, setPosts] = useState<IPost[]>([]);
@@ -22,24 +23,26 @@ export default function PostList() {
 
     const navigation = useNavigation<NativeStackNavigationProp<PostsStackParamList>>();
 
-    useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const data = await getPosts();
-                const sorted = data.sort((a, b) =>
-                    new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+    useFocusEffect(
+        useCallback(() => {
+            const fetchPosts = async () => {
+                try {
+                    const data = await getPosts();
+                    const sorted = data.sort((a, b) =>
+                        new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
 
-                setPosts(sorted);
-                setFilteredPosts(sorted);
-            } catch (error) {
-                console.error('Erro ao buscar posts:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
+                    setPosts(sorted);
+                    setFilteredPosts(sorted);
+                } catch (error) {
+                    console.error('Erro ao buscar posts:', error);
+                } finally {
+                    setLoading(false);
+                }
+            };
 
-        fetchPosts();
-    }, []);
+            fetchPosts();
+        }, [])
+    );
 
     useEffect(() => {
         const filtered = posts.filter(post =>

@@ -19,7 +19,7 @@ export default function PostsHomeScreen() {
   };
 
   return (
-    <SafeAreaProvider>
+    <SafeAreaProvider> 
       <SafeAreaView style={styles.container}>
       <PostList />
       <FloatingActionButton onPress={handleCreatePost} />

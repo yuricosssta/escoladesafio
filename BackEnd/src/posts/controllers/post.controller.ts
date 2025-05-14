@@ -21,11 +21,25 @@ import { ApiBody } from '@nestjs/swagger';
 const createPostSchema = z.object({
   title: z.string(),
   description: z.string(),
+  content: z.string(),
+  created_at: z.date().optional(),
+  modified_at: z.date().optional(),
+  image: z.string().optional(),
+  author: z.string().optional(),
+  published: z.boolean().optional(),
+  tags: z.array(z.string()).optional(),
+  categories: z.array(z.string()).optional(),
+
 });
 
 const updatePostSchema = z.object({
   title: z.string().optional(),
   description: z.string().optional(),
+  content: z.string().optional(),
+  modified_at: z.string().optional(),
+  image: z.string().optional(),
+  tags: z.array(z.string()).optional(),
+  categories: z.array(z.string()).optional(),
 });
 
 type CreatePost = z.infer<typeof createPostSchema>;
@@ -37,15 +51,17 @@ const SwaggerCreatePostSchema = {
     properties: {
       title: { type: 'string', example: 'Teste postagem' },
       description: { type: 'string', example: 'Descrição da postagem teste' },
+      content: { type: 'string', example: 'Conteudo da postagem teste' },
+
     },
-    required: ['title', 'description'],
+    required: ['title', 'description', 'content'],
   },
 };
 
 @UseInterceptors(LoggingInterceptor)
 @Controller('posts')
 export class PostController {
-  constructor(private readonly postService: PostService) {}
+  constructor(private readonly postService: PostService) { }
   // @UseGuards(AuthGuard)
   @Get()
   async getAllPosts() {
@@ -59,12 +75,26 @@ export class PostController {
   async getPost(@Param('postId') postId: string) {
     return this.postService.getPost(postId);
   }
+  
   @UsePipes(new ZodValidationPipe(createPostSchema))
   @Post()
   @ApiBody(SwaggerCreatePostSchema)
-  async createPost(@Body() { title, description }: CreatePost) {
-    return this.postService.createPost({ title, description });
+  async createPost(@Body() { title, description, content, image, author }: CreatePost) {
+    const postData = { title, description, content, image, author };
+    console.log('Dados recebidos:', postData);
+    return this.postService.createPost({
+      title, description,
+      content,
+      created_at: new Date(),
+      modified_at: new Date(),
+      image,
+      author, //colocar o nome do autor automaticamente
+      published: true,
+    });
   }
+
+
+  
   @Put(':postId')
   async updatePost(
     @Param('postId') postId: string,

@@ -23,7 +23,7 @@ export class PostService {
 
   async createPost(post: IPost) {
     const newPost = await this.postRepository.createPost(post);
-
+    console.log('Post criado:', newPost);
     return newPost;
   }
 
