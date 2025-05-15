@@ -5,10 +5,12 @@ import { PostModule } from './posts/post.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
+import { UserModule } from './users/user.module';
 
 @Module({
   imports: [
     PostModule,
+    UserModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),

@@ -5,11 +5,11 @@ export abstract class PostRepository {
   abstract getPost(postId: string): Promise<IPost>;
   abstract createPost(post: IPost): Promise<void>;
   abstract searchPost(term: string): Promise<IPost[]>;
-  
+
   abstract updatePost(
     postId: string,
     post: Partial<IPost>,
   ): Promise<IPost | null>;
-  
+
   abstract deletePost(postId: string): Promise<IPost | null>;
 }
