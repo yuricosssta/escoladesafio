@@ -1,3 +1,5 @@
+//BackEnd/src/user/repositories/mongoose/user.mongoose.repository.ts
+
 import { IUser } from '../../schemas/models/user.interface';
 import { UserRepository } from '../user.repository';
 import { InjectModel } from '@nestjs/mongoose';
@@ -23,10 +25,24 @@ export class UserMongooseRepository implements UserRepository {
         return this.userModel.findById(userId).exec();
     }
 
-    async createUser(user: IUser): Promise<void> {
-        const createUser = new this.userModel(user);
-        console.log('Usuário criado dentro do user.mongoose.repository: ', createUser);
-        await createUser.save();
+    async findByEmail(email: string): Promise<IUser | null> {
+        return await this.userModel.findOne({ email }).exec();
+    }
+
+
+    async createUser(user: IUser): Promise<IUser> {
+        try {
+            const newUser = new this.userModel(user);
+            await newUser.save();
+            // console.log('Usuário criado dentro do user.mongoose.repository: ', newUser);
+            //     const createUser = new this.userModel(user);        
+            // await createUser.save();
+            return newUser; 
+
+        } catch (error) {
+            console.error('Erro ao salvar usuário:', error);
+            throw error;
+        }
     }
 
     async updateUser(

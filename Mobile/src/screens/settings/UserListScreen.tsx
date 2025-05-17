@@ -5,16 +5,22 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { SettingsStackParamList } from '../../navigation/types';
 import UserList from '../../components/UserList';
 import { UserRule } from '../../lib/types/IUser';
+import { RouteProp, useRoute } from '@react-navigation/native';
 
-type Props = NativeStackScreenProps<SettingsStackParamList, 'Students'>;
 
-export default function StudentsScreen({ route }: Props) {
+type Props = NativeStackScreenProps<SettingsStackParamList, 'UserList'>
+
+
+
+export default function UserListScreen({ navigation }: Props) {
   // const { teacherId } = route.params;
+  const route = useRoute<RouteProp<SettingsStackParamList, 'UserList'>>();
+  const filterRule = route.params?.filterRule;
 
   return (
     <View style={styles.container}>
       {/* <Text style={styles.title}>Detalhes do Professor</Text> */}
-      <UserList filterRule= {UserRule.Student} /> 
+      <UserList filterRule={filterRule} />
     </View>
   );
 }

@@ -1,5 +1,13 @@
 NOTAS DO DESENVOLVEDOR DURANTE O DESENVOLVIMENTO
 
+-----
+17/05/2025
+Impemetando usuários. RegisterScreen.tsx. Listagem e e cadastro de usuários.
+
+-----
+16/05/2025
+Implementando usuários.
+
 ----
 14/05/2025
 Criação de posts com os requisitos e adequação da API realizada com sucesso.

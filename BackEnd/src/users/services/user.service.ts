@@ -1,4 +1,6 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+//BackEnd/src/users/controllers/user.controller.ts
+
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { IUser } from '../schemas/models/user.interface';
 import { UserRepository } from '../repositories/user.repository';
 
@@ -22,8 +24,12 @@ export class UserService {
     }
 
     async createUser(user: IUser) {
+        const existingUser = await this.userRepository.findByEmail(user.email); 
+        if (existingUser) {
+            throw new ConflictException('E-mail já cadastrado.');
+        }
+
         const newUser = await this.userRepository.createUser(user);
-        console.log('Usuário criado:', newUser);
         return newUser;
     }
 

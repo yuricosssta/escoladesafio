@@ -4,6 +4,7 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { PostsStackParamList } from '../../navigation/types';
 import { getPostById, createPost, updatePost } from '../../lib/api/posts';
 import { IPost } from '../../lib/types/IPost';
+import styles from '../styles';
 
 type PostEditScreenRouteProp = RouteProp<PostsStackParamList, 'PostEdit'>;
 
@@ -101,27 +102,27 @@ export default function PostEditScreen() {
       <Button title={isEditing ? 'Atualizar Post' : 'Criar Post'} onPress={handleSubmit} />
     </ScrollView>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 16,
-    paddingBottom: 32,
-  },
-  label: {
-    marginTop: 12,
-    fontWeight: 'bold',
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    padding: 12,
-    marginTop: 4,
-  },
-  centered: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     padding: 16,
+//     paddingBottom: 32,
+//   },
+//   label: {
+//     marginTop: 12,
+//     fontWeight: 'bold',
+//   },
+//   input: {
+//     borderWidth: 1,
+//     borderColor: '#ccc',
+//     borderRadius: 8,
+//     padding: 12,
+//     marginTop: 4,
+//   },
+//   centered: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+// });

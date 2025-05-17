@@ -1,3 +1,5 @@
+//BackEnd/src/users/controllers/user.controller.ts
+
 import {
     Body,
     Controller,
@@ -17,37 +19,43 @@ import { ZodValidationPipe } from 'src/shared/pipe/zod-validation.pipe';
 import { AuthGuard } from 'src/shared/guards/auth.guard';
 import { LoggingInterceptor } from 'src/shared/interceptors/logging.interceptor';
 import { ApiBody } from '@nestjs/swagger';
-import { UserRole } from '../schemas/models/user.interface';
+import { UserRule } from '../schemas/models/user.interface';
 
-const createUserSchema = z.object({
+const createUserSchema = z.object({ 
     name: z.string(),
     email: z.string().email(),
     password: z.string().min(6),
-    rule: z.nativeEnum(UserRole),
+    rule: z.nativeEnum(UserRule),
 });
 
 const updateUserSchema = z.object({
     name: z.string(),
     email: z.string().email(),
     password: z.string().min(6),
-    rule: z.nativeEnum(UserRole),
+    rule: z.nativeEnum(UserRule),
 });
 
 type CreateUser = z.infer<typeof createUserSchema>;
 type UpdateUser = z.infer<typeof updateUserSchema>;
 
 const SwaggerCreateUserSchema = {
-    schema: {
-        type: 'object',
-        properties: {
-            name: { type: 'string', example: 'Teste' },
-            email: { type: 'string', example: 'email@gmail.com' },
-            password: { type: 'string', example: '123456' },
-            rule: { type: 'string', example: 'admin' },
-        },
-        required: ['name', 'email', 'password', 'rule'],
+  schema: {
+    type: 'object',
+    properties: {
+      name: { type: 'string', example: 'Teste' },
+      email: { type: 'string', example: 'email@gmail.com' },
+      password: { type: 'string', example: '123456' },
+      rule: {
+        type: 'integer',
+        enum: [0, 1, 2],
+        example: 0,
+        description: '0 = Admin, 1 = Teacher, 2 = Student',
+      },
     },
+    required: ['name', 'email', 'password', 'rule'],
+  },
 };
+
 
 @UseInterceptors(LoggingInterceptor)
 @Controller('users')
@@ -66,6 +74,8 @@ export class usersController {
     async getUser(@Param('userId') userId: string) {
         return this.userService.getUser(userId);
     }
+
+
 
     @UsePipes(new ZodValidationPipe(createUserSchema))
     @Post()
