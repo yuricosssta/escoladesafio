@@ -11,6 +11,7 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 import { PostsStackParamList } from '../../navigation/types';
 import { IPost } from '../../lib/types/IPost';
 import { getPostById } from '../../lib/api/posts'; // você precisa ter essa função
+import styles from '../styles';
 
 type PostDetailsRouteProp = RouteProp<PostsStackParamList, 'PostDetails'>;
 
@@ -46,31 +47,32 @@ export default function PostDetailsScreen() {
 
   if (!post) {
     return (
-      <View style={styles.container}>
+      <View style={styles.item}>
         <Text style={styles.error}>Post não encontrado.</Text>
       </View>
     );
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.item}>
       {post.image && (
         <Image source={{ uri: post.image }} style={styles.image} resizeMode="cover" />
       )}
       <Text style={styles.title}>{post.title}</Text>
       <Text style={styles.meta}>Autor: {post.author || 'Desconhecido'}</Text>
-      <Text style={styles.meta}>
+      <Text style={styles.body}>{post.content}</Text>
+      {/* <Text style={styles.meta}>
         Publicado em: {new Date(post.created_at).toLocaleDateString()}
-      </Text>
+      </Text> */}
       {post.modified_at && (
         <Text style={styles.meta}>
           Atualizado em: {new Date(post.modified_at).toLocaleDateString()}
         </Text>
       )}
-      <Text style={styles.label}>Descrição:</Text>
-      <Text style={styles.body}>{post.description}</Text>
-      <Text style={styles.label}>Conteúdo:</Text>
-      <Text style={styles.body}>{post.content}</Text>
+      {/* <Text style={styles.label}>Descrição:</Text> */}
+      {/* <Text style={styles.body}>{post.description}</Text> */}
+      {/* <Text style={styles.label}>Conteúdo:</Text> */}
+      
       <Text style={styles.status}>
         {post.published ? '✅ Publicado' : '❌ Rascunho'}
       </Text>
@@ -78,50 +80,50 @@ export default function PostDetailsScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 16,
-    backgroundColor: '#fff',
-  },
-  loader: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  error: {
-    fontSize: 16,
-    color: 'red',
-  },
-  image: {
-    width: '100%',
-    height: 200,
-    borderRadius: 12,
-    marginBottom: 16,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    marginBottom: 8,
-  },
-  meta: {
-    fontSize: 12,
-    color: '#666',
-    marginBottom: 4,
-  },
-  label: {
-    marginTop: 16,
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  body: {
-    fontSize: 14,
-    marginTop: 4,
-    lineHeight: 20,
-  },
-  status: {
-    marginTop: 20,
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     padding: 16,
+//     backgroundColor: '#fff',
+//   },
+//   loader: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+//   error: {
+//     fontSize: 16,
+//     color: 'red',
+//   },
+//   image: {
+//     width: '100%',
+//     height: 200,
+//     borderRadius: 12,
+//     marginBottom: 16,
+//   },
+//   title: {
+//     fontSize: 22,
+//     fontWeight: 'bold',
+//     marginBottom: 8,
+//   },
+//   meta: {
+//     fontSize: 12,
+//     color: '#666',
+//     marginBottom: 4,
+//   },
+//   label: {
+//     marginTop: 16,
+//     fontSize: 16,
+//     fontWeight: '600',
+//   },
+//   body: {
+//     fontSize: 14,
+//     marginTop: 4,
+//     lineHeight: 20,
+//   },
+//   status: {
+//     marginTop: 20,
+//     fontSize: 14,
+//     fontWeight: 'bold',
+//     color: '#333',
+//   },
+// });

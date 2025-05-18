@@ -8,7 +8,8 @@ import PostList from '../../components/PostList';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { PostsStackParamList } from '../../navigation/types';
-import FloatingActionButton from '../../components/FloatingActionButton';
+import AddPostButton from '../../components/AddPostButton';
+import styles from '../styles';
 
 
 export default function PostsHomeScreen() {
@@ -22,27 +23,27 @@ export default function PostsHomeScreen() {
     <SafeAreaProvider> 
       <SafeAreaView style={styles.container}>
       <PostList />
-      <FloatingActionButton onPress={handleCreatePost} />
+      <AddPostButton onPress={handleCreatePost} />
       </SafeAreaView>
     </SafeAreaProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  loader: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  container: {
-    flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
-  },
+// const styles = StyleSheet.create({
+//   loader: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center'
+//   },
+//   container: {
+//     flex: 1,
+//     marginTop: StatusBar.currentHeight || 0,
+//   },
   
-  title: {
-    fontWeight: 'bold',
-    fontSize: 18,
-    marginBottom: 4
-  }
+//   title: {
+//     fontWeight: 'bold',
+//     fontSize: 18,
+//     marginBottom: 4
+//   }
   
-});
+// });

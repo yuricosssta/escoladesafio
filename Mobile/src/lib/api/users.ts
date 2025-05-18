@@ -45,7 +45,7 @@ export const createUser = async (user: Partial<IUser>): Promise<IUser> => {
         password: user.password,
         rule: user.rule,
     }
-    console.log('Enviando usuário:', userData);
+    console.log('Enviando usuário para cadastro (create).');
 
     return response.data;
 };

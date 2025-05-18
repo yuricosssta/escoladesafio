@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
-import { IUser } from '../lib/types/IUser';
+import { getUserRuleLabel, IUser } from '../lib/types/IUser';
 import { getUserById } from '../lib/api/users'; // ajuste o caminho conforme seu projeto
 import styles from '../screens/styles'; // ajuste o caminho conforme seu projeto
 
@@ -19,6 +19,7 @@ export default function UserDetails({ userId }: Props) {
     const fetchUser = async () => {
       try {
         const fetchedUser = await getUserById(userId);
+        console.log('Fetched user:', fetchedUser); 
         setUser(fetchedUser);
       } catch (err) {
         console.error(err);
@@ -29,29 +30,29 @@ export default function UserDetails({ userId }: Props) {
     };
 
     fetchUser();
-  }, [userId]);
+  }, []);
 
   if (loading) return <ActivityIndicator />;
   if (error) return <Text>{error}</Text>;
   if (!user) return <Text>Usuário não encontrado.</Text>;
 
   return (
-    <View style={[styles.container, { alignContent: 'flex-start' }]}>
-      <Text style={styles.title}>Nome: {user.name}</Text>
+    <View style={[styles.item, { alignContent: 'flex-start' }]}>
+      <Text style={styles.title}>{user.name}</Text>
       <Text>Email: {user.email}</Text>
-      <Text>Função: {UserRoleToLabel(user.rule)}</Text>
+      <Text>Função: {user.rule} {getUserRuleLabel(user.rule)}</Text>
     </View>
   );
 }
 
-const UserRoleToLabel = (role: number): string => {
-  switch (role) {
-    case 0: return 'Administração';
-    case 1: return 'Professor';
-    case 2: return 'Aluna(o)';
-    default: return 'Desconhecido';
-  }
-};
+// const UserRoleToLabel = (role: number): string => {
+//   switch (role) {
+//     case 0: return 'Administração';
+//     case 1: return 'Professor';
+//     case 2: return 'Aluna(o)';
+//     default: return 'Desconhecido';
+//   }
+// };
 
 // const styles = StyleSheet.create({
 //   container: {

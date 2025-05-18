@@ -6,6 +6,7 @@ import { SettingsStackParamList } from '../../navigation/types';
 import UserList from '../../components/UserList';
 import { UserRule } from '../../lib/types/IUser';
 import { RouteProp, useRoute } from '@react-navigation/native';
+import  styles from '../styles';
 
 
 type Props = NativeStackScreenProps<SettingsStackParamList, 'UserList'>
@@ -23,9 +24,9 @@ export default function UserListScreen({ navigation }: Props) {
       <UserList filterRule={filterRule} />
     </View>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16 },
-  title: { fontSize: 18, fontWeight: 'bold' },
-});
+// const styles = StyleSheet.create({
+//   container: { flex: 1, padding: 16 },
+//   title: { fontSize: 18, fontWeight: 'bold' },
+// });

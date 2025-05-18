@@ -11,13 +11,15 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useFocusEffect } from '@react-navigation/native';
-import { IUser, UserRule } from '../lib/types/IUser';
+import { getUserRuleLabel, IUser, UserRule } from '../lib/types/IUser';
 import { getUsers } from '../lib/api/users';
 import { SettingsStackParamList } from '../navigation/types';
+import styles from '../screens/styles';
 
 type Props = {
     filterRule?: UserRule;
 };
+
 
 export default function UserList({ filterRule }: Props) {
     const [users, setUsers] = useState<IUser[]>([]);
@@ -85,51 +87,53 @@ export default function UserList({ filterRule }: Props) {
             <FlatList
                 data={filteredUsers}
                 initialNumToRender={5}
-                keyExtractor={item => item.id}
+                keyExtractor={item => item._id}
                 keyboardShouldPersistTaps="handled"
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={styles.item}
-                        onPress={() => navigation.navigate('UserDetails', { userId: (item.id) })}
+                        onPress={() => navigation.navigate('UserDetails', { userId: (item._id) })}
                     >
+                        {/* <Text style={styles.textBody}>{item._id}</Text> */}
                         <Text style={styles.title}>{item.name}</Text>
-                        <Text style={styles.textBody}>{item.rule}</Text>
+                        <Text style={styles.textBody}>{item.email}</Text>
+                        <Text style={styles.textBody}>{getUserRuleLabel(item.rule)}</Text>
                     </TouchableOpacity>
                 )}
             />
         </View>
     );
-}
+};
 
-const styles = StyleSheet.create({
-    container: { padding: 16, flex: 1 },
-    searchInput: {
-        height: 40,
-        borderColor: '#ccc',
-        borderWidth: 1,
-        borderRadius: 8,
-        padding: 16,
-        marginBottom: 12,
-    },
-    item: {
-        backgroundColor: '#f0f0f0',
-        padding: 20,
-        marginVertical: 8,
-        marginHorizontal: 16,
-        borderRadius: 8,
-    },
-    title: {
-        fontWeight: 'bold',
-        fontSize: 16,
-        marginBottom: 4,
-    },
-    textBody: {
-        fontSize: 12,
-        marginBottom: 2,
-    },
-    loader: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-});
+// const styles = StyleSheet.create({
+//     container: { padding: 16, flex: 1 },
+//     searchInput: {
+//         height: 40,
+//         borderColor: '#ccc',
+//         borderWidth: 1,
+//         borderRadius: 8,
+//         padding: 16,
+//         marginBottom: 12,
+//     },
+//     item: {
+//         backgroundColor: '#f0f0f0',
+//         padding: 20,
+//         marginVertical: 8,
+//         marginHorizontal: 16,
+//         borderRadius: 8,
+//     },
+//     title: {
+//         fontWeight: 'bold',
+//         fontSize: 16,
+//         marginBottom: 4,
+//     },
+//     textBody: {
+//         fontSize: 12,
+//         marginBottom: 2,
+//     },
+//     loader: {
+//         flex: 1,
+//         justifyContent: 'center',
+//         alignItems: 'center',
+//     },
+// });

@@ -13,7 +13,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Picker } from '@react-native-picker/picker';
 import { UserRule } from '../../lib/types/IUser'; // ajuste o caminho conforme sua estrutura
 import { createUser } from '../../lib/api/users';
-import  styles  from '../../screens/styles';
+import styles from '../../screens/styles';
 
 // Schema de validação
 const schema = z.object({
@@ -46,9 +46,17 @@ export default function RegisterUserScreen() {
       await createUser(data);
       Alert.alert('Sucesso', 'Usuário criado com sucesso!');
       reset();
-    } catch (error) {
-      console.error(error);
-      Alert.alert('Erro', 'Falha ao criar usuário.');
+    } catch (error: any) {
+      console.error('Erro ao cadastrar:', error);
+
+      const status = error?.response?.status;
+      const message = error?.response?.data?.message;
+
+      if (status === 409 && message) {
+        Alert.alert('Erro', message); // Mostra: "E-mail já cadastrado."
+      } else {
+        Alert.alert('Erro', 'Falha ao criar usuário. Tente novamente.');
+      }
     }
   };
 
@@ -108,7 +116,7 @@ export default function RegisterUserScreen() {
         control={control}
         name="rule"
         render={({ field: { onChange, value } }) => (
-          <Picker selectedValue={value} onValueChange={onChange} style={styles.picker}>
+          <Picker selectedValue={value} onValueChange={(val) => onChange(Number(val))} style={styles.picker}>
             <Picker.Item label="Admin" value={UserRule.Admin} />
             <Picker.Item label="Professor" value={UserRule.Teacher} />
             <Picker.Item label="Aluno" value={UserRule.Student} />

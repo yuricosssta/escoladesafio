@@ -1,6 +1,10 @@
 NOTAS DO DESENVOLVEDOR DURANTE O DESENVOLVIMENTO
 
 -----
+18/05/2025
+Padronizando o styles
+
+-----
 17/05/2025
 Impemetando usuários. RegisterScreen.tsx. Listagem e e cadastro de usuários.
 

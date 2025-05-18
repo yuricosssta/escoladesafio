@@ -7,7 +7,7 @@ import UserDetails from '../../components/ProfileDetails';
 import AdmConfigs from '../../components/AdmConfigs';
 import styles from '../styles';
 
-const someUserId = '682634a929884c85ace6179f'; // Substitua pelo ID do usuário que você deseja exibir
+const someUserId = '6829b4819cac584c0efa6d29'; // Substitua pelo ID do usuário que você deseja exibir
 
 export default function SettingsScreen() {
   return (

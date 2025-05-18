@@ -7,8 +7,8 @@ export type UsersDocument = HydratedDocument<User>;
 
 @Schema({ timestamps: { createdAt: 'created_at', updatedAt: 'modified_at' } })
 export class User implements IUser {
-    // @Prop({ type: mongoose.Schema.Types.ObjectId })
-    // id?: string;
+    @Prop({ type: mongoose.Schema.Types.ObjectId })
+    _id?: string;
     @Prop({ required: true })
     name: string;
     @Prop({required: true, unique: true })

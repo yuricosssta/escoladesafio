@@ -10,20 +10,14 @@ import { UserRule } from '../lib/types/IUser';
 
 type Props = {
   title?: string;
-  // style?: StyleProp<ViewStyle>; // <- Permite estilos externos
 };
 
-// type AdminStackParamList = {
-//   StudentsList: undefined;
-//   TeachersList: undefined;
-//   AddUser: undefined;
-// };
 
 export default function AdmConfigs({ title = 'Administração'}: Props) {  
   const navigation = useNavigation<NativeStackNavigationProp<SettingsStackParamList>>();
 
   return (
-    <View style={[styles.container, {alignItems: 'flex-end'}, styles.option]}>
+    <View style={[styles.item, {alignItems: 'flex-end'}, styles.option]}>
       <Text style={styles.title}>{title}</Text>
 
       <TouchableOpacity
@@ -35,9 +29,16 @@ export default function AdmConfigs({ title = 'Administração'}: Props) {
 
       <TouchableOpacity
         style={styles.option}
-        onPress={() => navigation.navigate('UserList', { filterRule: UserRule.Teacher || UserRule.Admin })}
+        onPress={() => navigation.navigate('UserList', { filterRule: UserRule.Teacher })}
       >
         <Text style={styles.optionText}>Professores cadastrados</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.option}
+        onPress={() => navigation.navigate('UserList', { filterRule: UserRule.Admin })}
+      >
+        <Text style={styles.optionText}>Administração cadastrada</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
