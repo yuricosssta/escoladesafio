@@ -5,11 +5,14 @@ import { PostModule } from './posts/post.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
-import { UserModule } from './users/user.module';
+import { UserModule } from './users/user.module'; 
+import { AuthModule } from './auth/auth.module';
+
 
 @Module({
   imports: [
     PostModule,
+    // UsersModule,
     UserModule,
     ConfigModule.forRoot({
       isGlobal: true,
@@ -18,8 +21,9 @@ import { UserModule } from './users/user.module';
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '10m' },
-    }),
+      signOptions: { expiresIn: '90m' },
+    }), 
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -3,7 +3,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import UserList from '../../components/UserList';
-import UserDetails from '../../components/ProfileDetails';
+import UserDetails from '../../components/UserDetails';
 import AdmConfigs from '../../components/AdmConfigs';
 import styles from '../styles';
 

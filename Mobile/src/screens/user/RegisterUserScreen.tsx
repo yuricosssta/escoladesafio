@@ -62,7 +62,7 @@ export default function RegisterUserScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Registrar Usuário</Text>
+      <Text style={styles.title}></Text>
 
       <Controller
         control={control}

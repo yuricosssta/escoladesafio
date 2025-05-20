@@ -15,13 +15,15 @@ import {
 } from '@nestjs/common';
 import { UserService } from '../services/user.service';
 import { z } from 'zod';
-import { ZodValidationPipe } from 'src/shared/pipe/zod-validation.pipe';
-import { AuthGuard } from 'src/shared/guards/auth.guard';
-import { LoggingInterceptor } from 'src/shared/interceptors/logging.interceptor';
+import { ZodValidationPipe } from 'src/shared/pipe/zod-validation.pipe'; 
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+// import { LoggingInterceptor } from 'src/shared/interceptors/logging.interceptor';
 import { ApiBody } from '@nestjs/swagger';
 import { UserRule } from '../schemas/models/user.interface';
+import * as bcrypt from 'bcrypt';
 
-const createUserSchema = z.object({ 
+
+const createUserSchema = z.object({
     name: z.string(),
     email: z.string().email(),
     password: z.string().min(6),
@@ -39,29 +41,29 @@ type CreateUser = z.infer<typeof createUserSchema>;
 type UpdateUser = z.infer<typeof updateUserSchema>;
 
 const SwaggerCreateUserSchema = {
-  schema: {
-    type: 'object',
-    properties: {
-      name: { type: 'string', example: 'Teste' },
-      email: { type: 'string', example: 'email@gmail.com' },
-      password: { type: 'string', example: '123456' },
-      rule: {
-        type: 'integer',
-        enum: [0, 1, 2],
-        example: 0,
-        description: '0 = Admin, 1 = Teacher, 2 = Student',
-      },
+    schema: {
+        type: 'object',
+        properties: {
+            name: { type: 'string', example: 'Teste' },
+            email: { type: 'string', example: 'email@gmail.com' },
+            password: { type: 'string', example: '123456' },
+            rule: {
+                type: 'integer',
+                enum: [0, 1, 2],
+                example: 0,
+                description: '0 = Admin, 1 = Teacher, 2 = Student',
+            },
+        },
+        required: ['name', 'email', 'password', 'rule'],
     },
-    required: ['name', 'email', 'password', 'rule'],
-  },
 };
 
 
-@UseInterceptors(LoggingInterceptor)
+// @UseInterceptors(LoggingInterceptor)
 @Controller('users')
 export class usersController {
     constructor(private readonly userService: UserService) { }
-    // @UseGuards(AuthGuard)
+    @UseGuards(JwtAuthGuard)
     @Get()
     async getAllUsers() {
         return this.userService.getAllUsers();
@@ -83,12 +85,22 @@ export class usersController {
     async createUser(@Body() { name, email, password, rule }: CreateUser) {
         const userData = { name, email, rule };
         console.log('Dados recebidos:', userData);
-        return this.userService.createUser({
-            name,
-            email,
-            password,
-            rule,
-        });
+
+        const hashedPassword = await bcrypt.hash(password, 8);
+
+        console.log('Senha criptografada:', hashedPassword);
+        const userWithHashedPassword = {
+            ...userData,
+            password: hashedPassword,
+        }; 
+
+        return this.userService.createUser(userWithHashedPassword);
+        // return this.userService.createUser({
+        //     name,
+        //     email,
+        //     password,
+        //     rule,
+        // });
     }
 
 

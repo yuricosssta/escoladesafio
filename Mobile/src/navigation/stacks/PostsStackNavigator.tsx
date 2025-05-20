@@ -9,9 +9,24 @@ import PostDetailsScreen from '../../screens/posts/PostDetailsScreen';
 
 const Stack = createNativeStackNavigator<PostsStackParamList>();
 
-export default function PostsStackNavigator() { 
+export default function PostsStackNavigator() {
   return (
-    <Stack.Navigator initialRouteName="PostsHome">
+    <Stack.Navigator initialRouteName="PostsHome"
+      screenOptions={{
+        headerShown: true,
+        title: 'Escola Desafio',
+        headerStyle: {
+          backgroundColor: '#ffffff', // Cor do fundo do header
+          height: 60 
+        },
+        headerTintColor: '#000000', // Cor do texto e dos ícones
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          fontSize: 18,
+        },
+        headerTitleAlign: 'center', // Alinhamento do título
+      }}
+    >
       <Stack.Screen name="PostsHome" component={PostsHomeScreen} />
       <Stack.Screen name="PostDetails" component={PostDetailsScreen} />
       <Stack.Screen name="PostEdit" component={PostEditScreen} />

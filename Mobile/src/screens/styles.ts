@@ -1,4 +1,5 @@
-import { StatusBar, StyleSheet } from 'react-native';
+import { PixelRatio, StatusBar, StyleSheet } from 'react-native';
+import { clamp } from 'react-native-reanimated';
 
 const styles = StyleSheet.create({
     loader: {
@@ -31,6 +32,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 4,
         fontWeight: 'bold',
+
     },
 
     input: {
@@ -39,6 +41,8 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         padding: 12,
         marginTop: 4,
+        backgroundColor: '#ffffff',
+        textAlignVertical: 'top',
     },
     centered: {
         flex: 1,
@@ -67,6 +71,8 @@ const styles = StyleSheet.create({
         padding: 4,
         flex: 1,
         backgroundColor: '#dddddd',
+        // width: clamp(100, 300, 400),
+        // alignSelf: 'center',
     },
 
     // container: {
@@ -143,9 +149,18 @@ const styles = StyleSheet.create({
     },
 
     containerContent: {
-    padding: 16,
-    backgroundColor: '#fff',
-  },
+        padding: 16,
+        backgroundColor: '#fff',
+    },
+
+    scrollContainer: {
+        padding: 16,
+        flexGrow: 1,
+    },
+
+    headerStyle:{
+        backgroundColor: '#ffffff', // Cor do fundo do header
+    }
 
 });
 

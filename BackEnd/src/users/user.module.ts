@@ -4,7 +4,9 @@ import { User, UsersSchema } from './schemas/user.schema';
 import { UserRepository } from './repositories/user.repository';
 import { UserMongooseRepository } from './repositories/mongoose/user.mongoose.repository';
 import { UserService } from './services/user.service';
-import { usersController } from './controllers.ts/user.controller';
+// import { usersController } from './controllers.ts/user.controller';
+// import { UsersModule } from './users.module';
+// import { UsersService } from './users.service';
 
 @Module({
   imports: [
@@ -14,6 +16,7 @@ import { usersController } from './controllers.ts/user.controller';
         schema: UsersSchema,
       },
     ]),
+    // UsersModule,
   ],
   providers: [
     {
@@ -21,7 +24,16 @@ import { usersController } from './controllers.ts/user.controller';
       useClass: UserMongooseRepository,
     },
     UserService,
+    UserMongooseRepository,
+    // UsersService, 
   ],
-  controllers: [usersController],
+  exports: [
+    UserService,
+    UserRepository,
+    // UsersService
+  ],
+  controllers: [
+    // usersController
+  ],
 })
-export class UserModule {}
+export class UserModule { }

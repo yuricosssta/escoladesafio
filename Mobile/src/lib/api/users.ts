@@ -5,6 +5,15 @@ import { IUser } from "../types/IUser";
 
 const { API_BASE_URL } = Constants.expoConfig?.extra || {};
 
+export const loginUser = async (email: string, password: string) => {
+  const response = await axios.post('${API_BASE_URL}/auth/login', {
+    email,
+    password,
+  });
+
+  return response.data; // Esperado: { token, user }
+};
+
 export const getUsers = async () => {
     const dado = await axios.get(`${API_BASE_URL}/users`);
     if (dado.status !== 200) {

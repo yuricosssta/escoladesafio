@@ -2,11 +2,12 @@
 import axios from "axios";
 import Constants from "expo-constants";
 import { IPost } from "../types/IPost";
+import api from "./auth";
 
 const { API_BASE_URL } = Constants.expoConfig?.extra || {};
 
 export const getPosts = async () => {
-  const dado = await axios.get(`${API_BASE_URL}/posts`);
+  const dado = await api.get(`${API_BASE_URL}/posts`);
   if (dado.status !== 200) {
     throw new Error("Erro ao buscar posts");
   }
@@ -14,7 +15,7 @@ export const getPosts = async () => {
 };
 
 const transformPost = (data: any): IPost => ({
-  id: data._id || data.id,
+  _id: data._id || data.id,
   title: data.title || '',
   content: data.content || '',
   description: data.description || '',

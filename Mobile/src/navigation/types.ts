@@ -38,3 +38,28 @@ export type BottomTabsParamList = {
   PostsTab: undefined;
   SettingsTab: undefined;
 };
+
+export function getFriendlyTitle(routeName: string): string {
+  switch (routeName) {
+    case 'Login':
+      return 'Entrar';
+    case 'PostsTab':
+      return 'Escola Desafio';
+    case 'SettingsTab':
+      return 'Configurações';
+    case 'PostsHome':
+      return 'Escola Desafio';
+    case 'PostDetails':
+      return 'Escola Desafio';
+    case 'RegisterUser':
+      return 'Cadastro';
+    case 'UserList':
+      return 'Lista de Usuários';
+    case 'PostEdit':
+      return 'Edição';
+    case 'UserDetails':
+      return 'Perfil';
+    default:
+      return 'Escola Desafio';
+  }
+}

@@ -14,8 +14,8 @@ import {
 import { PostService } from '../services/post.service';
 import { z } from 'zod';
 import { ZodValidationPipe } from 'src/shared/pipe/zod-validation.pipe';
-import { AuthGuard } from 'src/shared/guards/auth.guard';
-import { LoggingInterceptor } from 'src/shared/interceptors/logging.interceptor';
+import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
+// import { LoggingInterceptor } from 'src/shared/interceptors/logging.interceptor';
 import { ApiBody } from '@nestjs/swagger';
 
 const createPostSchema = z.object({
@@ -58,11 +58,11 @@ const SwaggerCreatePostSchema = {
   },
 };
 
-@UseInterceptors(LoggingInterceptor)
+// @UseInterceptors(LoggingInterceptor)
 @Controller('posts')
 export class PostController {
   constructor(private readonly postService: PostService) { }
-  // @UseGuards(AuthGuard)
+  // @UseGuards(JwtAuthGuard) 
   @Get()
   async getAllPosts() {
     return this.postService.getAllPosts();

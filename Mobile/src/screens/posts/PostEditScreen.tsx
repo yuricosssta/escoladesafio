@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Button, ActivityIndicator, Alert, ScrollView } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Button, ActivityIndicator, Alert, ScrollView, SafeAreaView } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { PostsStackParamList } from '../../navigation/types';
 import { getPostById, createPost, updatePost } from '../../lib/api/posts';
 import { IPost } from '../../lib/types/IPost';
 import styles from '../styles';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 type PostEditScreenRouteProp = RouteProp<PostsStackParamList, 'PostEdit'>;
 
@@ -19,6 +20,7 @@ export default function PostEditScreen() {
   const [content, setContent] = useState('');
   const [author, setAuthor] = useState('');
   const [loading, setLoading] = useState(false);
+  const [inputHeight, setInputHeight] = useState(300);
 
   useEffect(() => {
     if (isEditing && postId) {
@@ -80,27 +82,36 @@ export default function PostEditScreen() {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.label}>Título</Text>
-      <TextInput style={styles.input} value={title} onChangeText={setTitle} placeholder="Título" />
+    <SafeAreaProvider>
+      <SafeAreaView style={[styles.container]}>
+        <ScrollView contentContainerStyle={[styles.scrollContainer]}>
+          <Text style={styles.label}>Título</Text>
+          <TextInput style={styles.input} value={title} onChangeText={setTitle} placeholder="Título" />
 
-      <Text style={styles.label}>Descrição</Text>
-      <TextInput style={styles.input} value={description} onChangeText={setDescription} placeholder="Descrição" />
+          <Text style={styles.label}>Descrição</Text>
+          <TextInput style={styles.input} value={description} onChangeText={setDescription} placeholder="Descrição" />
 
-      <Text style={styles.label}>Conteúdo</Text>
-      <TextInput
-        style={[styles.input, { height: 100 }]}
-        value={content}
-        onChangeText={setContent}
-        placeholder="Conteúdo"
-        multiline
-      />
+          <Text style={styles.label}>Conteúdo</Text>
+          <TextInput
+            style={[styles.input, { height: inputHeight }]}
+            value={content}
+            onChangeText={setContent}
+            placeholder="Conteúdo"
+            multiline
+            // onContentSizeChange={(event) => {
+            //   const newHeight = event.nativeEvent.contentSize.height;
+            //   setInputHeight(newHeight < 800 ? newHeight + 20 : 800); // Limita até 800
+            // }}
+          />
 
-      <Text style={styles.label}>Autor</Text>
-      <TextInput style={styles.input} value={author} onChangeText={setAuthor} placeholder="Autor" />
+          <Text style={styles.label}>Autor</Text>
+          <TextInput style={styles.input} value={author} onChangeText={setAuthor} placeholder="Autor" />
 
-      <Button title={isEditing ? 'Atualizar Post' : 'Criar Post'} onPress={handleSubmit} />
-    </ScrollView>
+          <Button title={isEditing ? 'Atualizar Post' : 'Criar Post'} onPress={handleSubmit} />
+        </ScrollView>
+      </SafeAreaView>
+    </SafeAreaProvider>
+
   );
 };
 

@@ -1,4 +1,4 @@
-//BackEnd/src/users/controllers/user.controller.ts
+//BackEnd/src/users/services/user.service.ts
 
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { IUser } from '../schemas/models/user.interface';
@@ -11,6 +11,14 @@ export class UserService {
         const users = await this.userRepository.getAllUsers();
         return users;
     }
+
+    async findByEmail(email: string) {
+    const user = await this.userRepository.findByEmail(email);
+    return user;
+}
+
+    
+
     async searchUser(term: string) {
         const user = this.userRepository.searchUser(term);
 
@@ -24,7 +32,7 @@ export class UserService {
     }
 
     async createUser(user: IUser) {
-        const existingUser = await this.userRepository.findByEmail(user.email); 
+        const existingUser = await this.userRepository.findByEmail(user.email);
         if (existingUser) {
             throw new ConflictException('E-mail já cadastrado.');
         }
@@ -32,6 +40,10 @@ export class UserService {
         const newUser = await this.userRepository.createUser(user);
         return newUser;
     }
+
+
+    
+
 
     async updateUser(userId: string, user: Partial<IUser>) {
         const updatedUser = await this.userRepository.updateUser(userId, user);
