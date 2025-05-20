@@ -5,27 +5,27 @@ import { PostModule } from './posts/post.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
-import { UserModule } from './users/user.module'; 
 import { AuthModule } from './auth/auth.module';
-
+import { UsersModule } from './users/user.module';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from './shared/guards/auth.guard';
 
 @Module({
   imports: [
-    PostModule,
-    // UsersModule,
-    UserModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    MongooseModule.forRoot(process.env.MONGO_URI || 'mongodb://localhost/escoladesafio'), // verificar uri
+    MongooseModule.forRoot(process.env.MONGO_URI),
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '90m' },
-    }), 
+    }),
+    PostModule,
+    UsersModule,
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, { provide: APP_GUARD, useClass: AuthGuard }],
 })
 export class AppModule {}

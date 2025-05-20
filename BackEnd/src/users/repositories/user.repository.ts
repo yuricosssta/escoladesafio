@@ -1,18 +1,15 @@
-//Backend/src/users/repositories/user.repository.ts
-
 import { IUser } from '../schemas/models/user.interface';
-
-export abstract class UserRepository {
+import { CreateUser, UpdateUser } from '../validations/users.zod';
+export abstract class UsersRepository {
   abstract getAllUsers(): Promise<IUser[]>;
-  abstract getUser(userId: string): Promise<IUser>;
-  abstract createUser(user: IUser): Promise<IUser>;
   abstract searchUser(term: string): Promise<IUser[]>;
-  abstract findByEmail(email: string): Promise<IUser | null>;
+  abstract getUser(userId: string): Promise<IUser>;
+  abstract createUser(user: CreateUser): Promise<IUser>;
+  // abstract updateUser(userId: string, user: UpdateUser): Promise<IUser | null>; 
+  abstract deleteUser(userId: string): Promise<IUser | null>;
 
   abstract updateUser(
-    userId: string,
-    user: Partial<IUser>,
-  ): Promise<IUser | null>;
-
-  abstract deleteUser(userId: string): Promise<IUser | null>;
+      userId: string,
+      user: Partial<IUser>,
+    ): Promise<IUser | null>;
 }

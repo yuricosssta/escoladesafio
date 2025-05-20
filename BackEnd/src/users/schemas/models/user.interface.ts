@@ -12,10 +12,13 @@ export enum UserRule {
 }
 
 export interface IUser {
-  _id?: string;
-  name: string;
+  id?: string;
   email: string;
+  name: string;
   password: string;
+  isAdmin: boolean;
   rule: UserRule;
+  created_at?: Date;
+  modified_at?: Date;
 }
 

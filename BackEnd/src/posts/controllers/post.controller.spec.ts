@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PostController } from './post.controller';
 import { PostService } from '../services/post.service';
+import { IUser } from  '../../users/schemas/models/user.interface'
 
 describe('PostController', () => {
   let postController: PostController;
@@ -77,9 +78,18 @@ describe('PostController', () => {
       const createdPost = { id: '1', ...newPost };
       mockPostService.createPost.mockResolvedValue(createdPost);
 
-      const result = await postController.createPost(newPost);
+      const mockUser: IUser = {
+        id: '123',
+        email: 'silva@silva.com',
+        name: 'silva',
+        password: 'password',
+        isAdmin: false,
+        rule: 2,
+      };
+
+      const result = await postController.createPost(newPost, mockUser);
       expect(result).toEqual(createdPost);
-      expect(postService.createPost).toHaveBeenCalledWith(newPost);
+      expect(postService.createPost).toHaveBeenCalledWith(newPost, mockUser);
     });
   });
 

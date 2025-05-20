@@ -8,7 +8,7 @@ export type PostsDocument = HydratedDocument<Post>;
 export class Post implements IPost {
 
   @Prop({ type: mongoose.Schema.Types.ObjectId })
-  _id?: string;
+  id?: string;
   @Prop({ required: true })
   title: string;
   @Prop()

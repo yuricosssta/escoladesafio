@@ -9,7 +9,12 @@ export class ZodValidationPipe implements PipeTransform {
       const parsedValue = this.schema.parse(value);
       return parsedValue;
     } catch (error) {
-      throw new BadRequestException('Falha na validação', error);
+      // Aqui extraímos a mensagem de erro de forma mais clara.
+      const errorMessage = error.errors
+        .map((err) => `${err.path.join('.')}: ${err.message}`)
+        .join(', ');
+
+      throw new BadRequestException(`Falha na validação: ${errorMessage}`);
     }
   }
 }

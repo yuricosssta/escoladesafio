@@ -14,9 +14,11 @@ import {
 import { PostService } from '../services/post.service';
 import { z } from 'zod';
 import { ZodValidationPipe } from 'src/shared/pipe/zod-validation.pipe';
-import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
-// import { LoggingInterceptor } from 'src/shared/interceptors/logging.interceptor';
 import { ApiBody } from '@nestjs/swagger';
+import { LoggingInterceptor } from 'src/shared/interceptors/logging.interceptor';
+import { GetUser } from 'src/shared/decorators/get-user-decorator';
+import { IUser } from 'src/users/schemas/models/user.interface';
+import { Public } from 'src/shared/decorators/public.decorator';
 
 const createPostSchema = z.object({
   title: z.string(),
@@ -58,28 +60,33 @@ const SwaggerCreatePostSchema = {
   },
 };
 
-// @UseInterceptors(LoggingInterceptor)
+@UseInterceptors(LoggingInterceptor)
 @Controller('posts')
 export class PostController {
   constructor(private readonly postService: PostService) { }
-  // @UseGuards(JwtAuthGuard) 
+  // @UseGuards(JwtAuthGuard)
+  @Public() 
   @Get()
   async getAllPosts() {
     return this.postService.getAllPosts();
   }
+  @Public()
   @Get('search')
   async searchPost(@Query('term') term: string) {
     return this.postService.searchPost(term);
   }
+  @Public()
   @Get(':postId')
   async getPost(@Param('postId') postId: string) {
     return this.postService.getPost(postId);
   }
+
   
-  @UsePipes(new ZodValidationPipe(createPostSchema))
   @Post()
   @ApiBody(SwaggerCreatePostSchema)
-  async createPost(@Body() { title, description, content, image, author }: CreatePost) {
+  async createPost(@Body(new ZodValidationPipe(createPostSchema))
+  { title, description, content, image, author }: CreatePost,
+    @GetUser() user: IUser) {
     const postData = { title, description, content, image, author };
     console.log('Dados recebidos:', postData);
     return this.postService.createPost({
@@ -90,11 +97,11 @@ export class PostController {
       image,
       author, //colocar o nome do autor automaticamente
       published: true,
-    });
+    }, user);
   }
 
 
-  
+
   @Put(':postId')
   async updatePost(
     @Param('postId') postId: string,

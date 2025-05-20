@@ -12,7 +12,7 @@ export default function RootNavigator() {
 
   return (
     <Stack.Navigator screenOptions={{
-      headerShown: false, 
+      headerShown: false,
       headerStyle: {
         backgroundColor: '#ffffff', // Cor do fundo do header
       },
@@ -24,11 +24,11 @@ export default function RootNavigator() {
       headerTitleAlign: 'center', // Alinhamento do título
     }}
     >
-      {/* {user ? ( */}
-      <Stack.Screen name="MainTabs" component={BottomTabsNavigator} />
-       {/* ) : (  */}
-      {/* <Stack.Screen name="Login" component={LoginScreen} /> */}
-       {/* )}  */}
+      {user ? (
+        <Stack.Screen name="MainTabs" component={BottomTabsNavigator} />
+      ) : (
+        <Stack.Screen name="Login" component={LoginScreen} />
+      )}
     </Stack.Navigator>
   );
 }

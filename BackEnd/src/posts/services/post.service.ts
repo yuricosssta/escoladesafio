@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PostRepository } from '../repositories/post.repository';
 import { IPost } from '../schemas/models/post.interface';
+import  { IUser }  from '../../users/schemas/models/user.interface';
 
 @Injectable()
 export class PostService {
@@ -21,9 +22,12 @@ export class PostService {
     return post;
   }
 
-  async createPost(post: IPost) {
-    const newPost = await this.postRepository.createPost(post);
-    console.log('Post criado:', newPost);
+  async createPost(post: IPost, user: IUser) {
+    const newPost = await this.postRepository.createPost({
+      ...post,
+      author: user.name,
+    });
+
     return newPost;
   }
 

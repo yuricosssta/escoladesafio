@@ -1,61 +1,58 @@
-//BackEnd/src/users/services/user.service.ts
-
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
-import { IUser } from '../schemas/models/user.interface';
-import { UserRepository } from '../repositories/user.repository';
+import {
+  ConflictException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
+import { UsersRepository } from  '../repositories/user.repository';
+import { CreateUser, UpdateUser } from '../validations/users.zod';
+import * as bcrypt from 'bcrypt';
+import { IUser } from  '../schemas//models/user.interface';//'../schemas/models/users.interface';
 
 @Injectable()
-export class UserService {
-    constructor(private readonly userRepository: UserRepository) { }
-    async getAllUsers() {
-        const users = await this.userRepository.getAllUsers();
-        return users;
-    }
+export class UsersService {
+  constructor(private readonly userRepository: UsersRepository) {}
+  async getAllUsers() {
+    const users = await this.userRepository.getAllUsers();
+    return users;
+  }
 
-    async findByEmail(email: string) {
-    const user = await this.userRepository.findByEmail(email);
+  async searchUser(term: string) {
+    return this.userRepository.searchUser(term);
+  }
+  async getUser(userId: string) {
+    const user = await this.userRepository.getUser(userId);
+
+    if (!user) throw new NotFoundException('Usuário não encontrado');
     return user;
-}
+  }
 
-    
-
-    async searchUser(term: string) {
-        const user = this.userRepository.searchUser(term);
-
-        return user;
+  async createUser(user: CreateUser) {
+    const hashedPassword = await bcrypt.hash(user.password, 10);
+    try {
+      return await this.userRepository.createUser({
+        ...user,
+        password: hashedPassword,
+      });
+    } catch (e) {
+      if (e.code === 11000) {
+        throw new ConflictException('Username já está em uso');
+      }
+      throw new InternalServerErrorException('Erro ao criar usuário');
     }
-    async getUser(userId: string) {
-        const user = await this.userRepository.getUser(userId);
+  }
 
-        if (!user) throw new NotFoundException('Usuário não encontrado');
-        return user;
-    }
+  async updateUser(userId: string, user: UpdateUser) {
+    const updateUser = await this.userRepository.updateUser(userId, user);
 
-    async createUser(user: IUser) {
-        const existingUser = await this.userRepository.findByEmail(user.email);
-        if (existingUser) {
-            throw new ConflictException('E-mail já cadastrado.');
-        }
+    if (!updateUser) throw new NotFoundException('Usuário não encontrado');
+    return updateUser;
+  }
 
-        const newUser = await this.userRepository.createUser(user);
-        return newUser;
-    }
+  async deleteUser(userId: string) {
+    const deletedUser = await this.userRepository.deleteUser(userId);
 
-
-    
-
-
-    async updateUser(userId: string, user: Partial<IUser>) {
-        const updatedUser = await this.userRepository.updateUser(userId, user);
-
-        if (!updatedUser) throw new NotFoundException('Usuário não encontrado');
-        return updatedUser;
-    }
-
-    async deleteUser(userId: string) {
-        const deletedUser = await this.userRepository.deleteUser(userId);
-
-        if (!deletedUser) throw new NotFoundException('Usuário não encontrado');
-        return { message: `Usuário com id ${userId} deletado com sucesso.` };
-    }
+    if (!deletedUser) throw new NotFoundException('Usuário não encontrado');
+    return { message: `Usuário com id ${userId} deletado com sucesso.` };
+  }
 }
