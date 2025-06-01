@@ -23,16 +23,17 @@ import {
 } from '../validations/users.zod';
 import { IUser } from '../schemas/models/user.interface';
 import { GetUser } from '../../shared/decorators/get-user-decorator';
-import { AdminGuard } from '../../shared/guards/admin.guard';
+import { AdminGuard } from '../../auth/admin.guard';
 
 @UseInterceptors(LoggingInterceptor)
 @Controller('users')
 export class UsersController {
-  constructor(private readonly userService: UsersService) {}
+  constructor(private readonly userService: UsersService) { }
   @Get()
   async getAllUsers() {
     return this.userService.getAllUsers();
   }
+ 
   @Get('search')
   async searchUser(@Query('term') term: string) {
     return this.userService.searchUser(term);

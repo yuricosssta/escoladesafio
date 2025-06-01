@@ -44,6 +44,10 @@ export class UsersMongooseRepository implements UsersRepository {
     return result;
   }
 
+  async findOneByEmail(email: string): Promise<IUser | undefined> {
+  return this.userModel.findOne({ email }).exec();
+}
+
   deleteUser(userId: string): Promise<IUser | null> {
     return this.userModel.findByIdAndDelete({ _id: userId }).exec();
   }

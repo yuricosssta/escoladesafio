@@ -9,6 +9,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function RootNavigator() {
   const { user } = useContext(AuthContext);
+  console.log(user);
 
   return (
     <Stack.Navigator screenOptions={{

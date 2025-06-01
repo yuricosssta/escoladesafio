@@ -4,18 +4,22 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
-import { UsersRepository } from  '../repositories/user.repository';
+import { UsersRepository } from '../repositories/user.repository';
 import { CreateUser, UpdateUser } from '../validations/users.zod';
 import * as bcrypt from 'bcrypt';
-import { IUser } from  '../schemas//models/user.interface';//'../schemas/models/users.interface';
+import { IUser } from '../schemas//models/user.interface';//'../schemas/models/users.interface';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly userRepository: UsersRepository) {}
+  constructor(private readonly userRepository: UsersRepository) { }
   async getAllUsers() {
     const users = await this.userRepository.getAllUsers();
     return users;
   }
+
+async findOne(email: string): Promise<IUser | undefined> {
+  return this.userRepository.findOneByEmail(email);
+}
 
   async searchUser(term: string) {
     return this.userRepository.searchUser(term);

@@ -3,11 +3,13 @@
 import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import RootNavigator from './src/navigation/RootNavigator';
+import { AuthProvider } from './src/context/AuthContext';
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
+    <AuthProvider>
     <NavigationContainer>
      <RootNavigator />
         {/* <MainNavigator /> */}
@@ -20,6 +22,7 @@ export default function App() {
       {/* No MainNavigator/SettingsScreen: */}
       {/*   onLogout={() => setIsLoggedIn(false)} */}
     </NavigationContainer>
+    </AuthProvider>
   );
 }
 

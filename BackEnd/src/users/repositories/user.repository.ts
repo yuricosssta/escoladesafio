@@ -7,9 +7,9 @@ export abstract class UsersRepository {
   abstract createUser(user: CreateUser): Promise<IUser>;
   // abstract updateUser(userId: string, user: UpdateUser): Promise<IUser | null>; 
   abstract deleteUser(userId: string): Promise<IUser | null>;
-
+  abstract findOneByEmail(email: string): Promise<IUser | undefined>;
   abstract updateUser(
-      userId: string,
-      user: Partial<IUser>,
-    ): Promise<IUser | null>;
+    userId: string,
+    user: Partial<IUser>,
+  ): Promise<IUser | null>;
 }

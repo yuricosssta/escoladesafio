@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { UsersModule } from '../users/user.module'
+import { AuthController } from './auth.controller';
+import { AuthService } from './auth.service';
+import { UsersModule } from '../users/user.module';
 import { JwtModule } from '@nestjs/jwt';
-import { AuthController } from './controllers/auth.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { AuthService } from './services/auth.service';
+
 
 @Module({
   imports: [
@@ -12,8 +13,9 @@ import { AuthService } from './services/auth.service';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
+        global: true,
         secret: configService.get<string>('JWT_SECRET'),
-        signOptions: { expiresIn: '1h' },
+        signOptions: { expiresIn: configService.get<string>('JWT_EXPIRES_IN') },
       }),
     }),
   ],
@@ -21,4 +23,7 @@ import { AuthService } from './services/auth.service';
   controllers: [AuthController],
   exports: [AuthService],
 })
-export class AuthModule {}
+export class AuthModule { }
+
+// Instalar o pacote dotenv
+// npm install dotenv

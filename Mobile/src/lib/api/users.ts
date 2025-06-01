@@ -4,15 +4,33 @@ import Constants from "expo-constants";
 import { IUser } from "../types/IUser";
 
 const { API_BASE_URL } = Constants.expoConfig?.extra || {};
+// const API_BASE_URL = Constants.expoConfig?.extra?.API_BASE_URL || "http://localhost:3001";
 
 export const loginUser = async (email: string, password: string) => {
-  const response = await axios.post('${API_BASE_URL}/auth/login', {
+  const response = await axios.post(`${API_BASE_URL}/auth/login`, {
     email,
     password,
   });
+// console.log('Enviando dados de login:', { email, password });
+  if (response.status !== 200) {
+    throw new Error("Erro ao fazer login");
+  }
+  console.log('Resposta do login:', response.data);
 
-  return response.data; // Esperado: { token, user }
+  const profileResponse = await axios.get(`${API_BASE_URL}/auth/profile`, {
+    headers: {
+      Authorization: `Bearer ${response.data.access_token}`,
+    },
+  });
+  const user = profileResponse.data;
+  console.log('Perfil do usuário:', user);
+return {
+    token: response.data.access_token,
+    user};
+
+//   return response.data; // Esperado: { token, user }
 };
+
 
 export const getUsers = async () => {
     const dado = await axios.get(`${API_BASE_URL}/users`);

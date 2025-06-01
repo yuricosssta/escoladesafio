@@ -27,7 +27,9 @@ export default function LoginScreen() {
     setLoading(true);
     try {
       const userData = await loginUser(email, password); // deve retornar { token, user }
+      console.log('userData:', userData);
       await signIn(userData);
+      console.log('signIn chamado');
     } catch (error: any) {
       Alert.alert('Erro ao logar', error.message || 'Verifique suas credenciais.');
     } finally {

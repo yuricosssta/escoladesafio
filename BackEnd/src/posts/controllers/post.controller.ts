@@ -16,9 +16,10 @@ import { z } from 'zod';
 import { ZodValidationPipe } from 'src/shared/pipe/zod-validation.pipe';
 import { ApiBody } from '@nestjs/swagger';
 import { LoggingInterceptor } from 'src/shared/interceptors/logging.interceptor';
-import { GetUser } from 'src/shared/decorators/get-user-decorator';
+//import { GetUser } from 'src/shared/decorators/get-user-decorator';
 import { IUser } from 'src/users/schemas/models/user.interface';
-import { Public } from 'src/shared/decorators/public.decorator';
+import { GetUser } from 'src/shared/decorators/get-user-decorator';
+//import { Public } from 'src/shared/decorators/public.decorator';
 
 const createPostSchema = z.object({
   title: z.string(),
@@ -65,17 +66,17 @@ const SwaggerCreatePostSchema = {
 export class PostController {
   constructor(private readonly postService: PostService) { }
   // @UseGuards(JwtAuthGuard)
-  @Public() 
+  
   @Get()
   async getAllPosts() {
     return this.postService.getAllPosts();
   }
-  @Public()
+  
   @Get('search')
   async searchPost(@Query('term') term: string) {
     return this.postService.searchPost(term);
   }
-  @Public()
+  
   @Get(':postId')
   async getPost(@Param('postId') postId: string) {
     return this.postService.getPost(postId);

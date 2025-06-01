@@ -17,8 +17,8 @@ type AuthContextType = {
 
 export const AuthContext = createContext<AuthContextType>({
   user: null,
-  signIn: async () => {},
-  signOut: async () => {},
+  signIn: async () => { },
+  signOut: async () => { },
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const loadUser = async () => {
       const storedUser = await AsyncStorage.getItem('user');
-      if (storedUser) {
+      if (storedUser && storedUser !== 'undefined') {
         setUser(JSON.parse(storedUser));
       }
     };
@@ -36,8 +36,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const signIn = async ({ token, user }: { token: string; user: User }) => {
     await AsyncStorage.setItem('token', token);
-    await AsyncStorage.setItem('user', JSON.stringify(user));
-    setUser(user);
+    if (user) {
+      await AsyncStorage.setItem('user', JSON.stringify(user));
+      setUser(user);
+    }
   };
 
   const signOut = async () => {
