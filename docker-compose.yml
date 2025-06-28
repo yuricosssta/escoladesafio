@@ -11,6 +11,7 @@ services:
       - ./BackEnd/.env
     volumes:
       - ./BackEnd:/usr/app
+      # - /usr/app/node_modules
     working_dir: /usr/app
     command: npm run start:dev
   
@@ -26,6 +27,7 @@ services:
       # - "19002:19002"
     volumes:
       - ./Mobile:/app
+      # - /app/node_modules
     working_dir: /app
     command: npx expo start --dev-client
     # command: npx expo start --web
