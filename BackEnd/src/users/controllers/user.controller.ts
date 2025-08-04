@@ -23,7 +23,7 @@ import {
 } from '../validations/users.zod';
 import { IUser } from '../schemas/models/user.interface';
 import { GetUser } from '../../shared/decorators/get-user-decorator';
-import { AdminGuard } from '../../auth/admin.guard';
+
 
 @UseInterceptors(LoggingInterceptor)
 @Controller('users')
@@ -42,14 +42,16 @@ export class UsersController {
   async getUser(@Param('userId') userId: string) {
     return this.userService.getUser(userId);
   }
-  @UseGuards(AdminGuard)
+  
+
   @Post()
   async createUser(
     @Body(new ZodValidationPipe(createUserSchema)) user: CreateUser,
   ) {
     return this.userService.createUser(user);
   }
-  @UseGuards(AdminGuard)
+  
+  
   @Put(':userId')
   async updateUser(
     @Param('userId') userId: string,
@@ -58,7 +60,8 @@ export class UsersController {
   ) {
     return this.userService.updateUser(userId, { name, isAdmin, rule });
   }
-  @UseGuards(AdminGuard)
+  
+  
   @Delete(':userId')
   async deleteUser(@Param('userId') userId: string) {
     return this.userService.deleteUser(userId);

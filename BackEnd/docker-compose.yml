@@ -1,0 +1,16 @@
+# version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    env_file:
+      - .env
+    volumes:
+      - ./BackEnd:/usr/app
+      # - /usr/app/node_modules
+    working_dir: /usr/app
+    command: npm run start:dev

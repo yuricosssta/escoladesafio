@@ -5,6 +5,7 @@ import { PostRepository } from './repositories/post.repository';
 import { PostMongooseRepository } from './repositories/mongoose/post.mongoose.repository';
 import { PostService } from './services/post.service';
 import { PostController } from './controllers/post.controller';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { PostController } from './controllers/post.controller';
         schema: PostsSchema,
       },
     ]),
+    AuthModule,
   ],
   providers: [
     {
@@ -23,5 +25,6 @@ import { PostController } from './controllers/post.controller';
     PostService,
   ],
   controllers: [PostController],
+  exports: [PostService],
 })
 export class PostModule {}
