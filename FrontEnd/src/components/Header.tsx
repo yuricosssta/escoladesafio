@@ -6,16 +6,17 @@ import {
   SheetHeader,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { config } from "@/config";
 import { cn } from "@/lib/utils";
+// import { config } from "@/config";
 import { Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FunctionComponent } from "react";
+
 interface MenuItem {
   name: string;
   href: string;
-  openInNewTab?: boolean;
+  openInNewTab?: boolean; 
 }
 
 const menuItems: MenuItem[] = [
@@ -79,10 +80,10 @@ export const Header: FunctionComponent = () => {
     <section className="flex items-center justify-between mt-8 md:mt-16 mb-12">
       <Link href="/">
         <h1 className="text-4xl md:text-6xl font-bold tracking-tighter leading-tight">
-          {config.blog.name}
+          Escola Desafio
         </h1>
       </Link>
-      <Navigation />
+      <Navigation /> 
     </section>
   );
 };

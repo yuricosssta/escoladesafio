@@ -15,19 +15,37 @@ services:
     working_dir: /usr/app
     command: npm run start:dev
   
-  mobile:
-    build:
-      context: ./Mobile
-      dockerfile: Dockerfile
-    depends_on:
-      - api
-    ports:
-      - "8081:8081"
-      # - "19001:19001"
-      # - "19002:19002"
-    volumes:
-      - ./Mobile:/app
-      # - /app/node_modules
-    working_dir: /app
-    command: npx expo start --dev-client
-    # command: npx expo start --web
+  # mobile:
+  #   build:
+  #     context: ./Mobile
+  #     dockerfile: Dockerfile
+  #   depends_on:
+  #     - api
+  #   ports:
+  #     - "8081:8081"
+  #     # - "19001:19001"
+  #     # - "19002:19002"
+  #   volumes:
+  #     - ./Mobile:/app
+  #     # - /app/node_modules
+  #   working_dir: /app
+  #   command: npx expo start --dev-client
+  #   # command: npx expo start --web
+
+  # frontend:
+  #   build:
+  #     context: ./FrontEnd
+  #     dockerfile: Dockerfile
+  #   depends_on:
+  #     - api
+  #   ports:
+  #     - "3000:3000"
+  #   env_file:
+  #     - ./FrontEnd/.env      
+  #   volumes:
+  #     - ./FrontEnd:/app/frontend
+  #     # - /app/node_modules
+  #   working_dir: /app/frontend
+  #   command: npm run dev
+             
+    

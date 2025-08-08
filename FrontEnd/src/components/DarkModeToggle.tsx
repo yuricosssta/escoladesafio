@@ -9,7 +9,7 @@ export const DarkModeToggle = () => {
 
   useEffect(() => {
     // When the component mounts on the client, update the state to indicate it is mounted
-    setMounted(true);
+    setMounted(true); 
   }, []);
 
   const toggleDarkMode = () => {

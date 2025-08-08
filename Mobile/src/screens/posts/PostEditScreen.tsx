@@ -42,7 +42,7 @@ export default function PostEditScreen() {
   }, [isEditing, postId]);
 
   const handleSubmit = async () => {
-    if (!title || !description || !content || !author) {
+    if (!title || !description || !content ) {
       Alert.alert('Atenção', 'Por favor, preencha todos os campos.');
       return;
     }
