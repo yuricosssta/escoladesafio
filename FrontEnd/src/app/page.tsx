@@ -1,15 +1,30 @@
-import { Navbar } from "@/components/Navbar";
-// import Image from "next/image";
-
-export default function Home() {
+export default function HomePage() {
   return (
-    // <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-    <div className="container mx-auto px-5 mb-10">
-    {/* // <div> */}
-      {/* <Navbar /> */}
-      <h1>Página de Teste</h1>
-      <p>Se você está vendo isso, o problema está nos componentes importados.</p>
-    </div>
+    <main className="p-8">
+      <h1 className="text-4xl font-bold mb-8">Página de Teste do Tailwind</h1>
 
+      {/* Bloco de Teste do Prose */}
+      <article className="prose border-2 p-4">
+        <h1>Este é um título H1 dentro do prose.</h1>
+        <p>Este é um parágrafo. Se o plugin de tipografia estiver funcionando, este texto terá um estilo bonito, com margens e tamanho de fonte adequados.</p>
+        <ul>
+          <li>Item de lista 1</li>
+          <li>Item de lista 2</li>
+        </ul>
+        <p>Este texto deveria estar bem diferente de um texto normal sem a classe prose.</p>
+      </article>
+
+      <hr className="my-8" />
+
+      {/* Bloco de comparação sem o prose */}
+      <div className="border-2 p-4">
+        <h1>Este é um título H1 normal (sem prose).</h1>
+        <p>Este é um parágrafo normal. Compare o estilo dele com o de cima.</p>
+        <ul>
+          <li>Item de lista 1</li>
+          <li>Item de lista 2</li>
+        </ul>
+      </div>
+    </main>
   );
 }

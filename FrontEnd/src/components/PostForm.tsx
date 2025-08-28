@@ -102,6 +102,10 @@ export default function PostForm({ onSubmit, initialData, isLoading }: PostFormP
           required
         />
       </div>
+      <p className="text-sm text-gray-500">
+        Dica: Você pode usar <a href="https://www.markdownguide.org/cheat-sheet/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Markdown</a> para formatar o conteúdo.
+      </p>
+      <p className="block text-sm font-medium text-white-700"> Prévia do conteúdo a ser publicado: </p>
       <MarkdownPreview markdown={post.content} />
 
       <div className="flex items-center">

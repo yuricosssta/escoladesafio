@@ -1,11 +1,12 @@
+//src/components/BlogPostContent.tsx
 "use client";
 
 import { IPost } from "../types/IPost";
 import Link from "next/link";
 // import Markdown from "react-markdown";
-import remarkGfm from 'remark-gfm';
-import MarkdownIt from 'markdown-it';
-import highlightjs from 'markdown-it-highlightjs';
+// import remarkGfm from 'remark-gfm';
+// import MarkdownIt from 'markdown-it';
+// import highlightjs from 'markdown-it-highlightjs';
 import MarkdownPreview from "./MarkdownPreview";
 
 export const BlogPostContent = ({ post }: { post: IPost | null }) => {
@@ -22,15 +23,10 @@ export const BlogPostContent = ({ post }: { post: IPost | null }) => {
         <h1 className="text-3xl md:text-4xl font-bold tracking-tighter leading-tight mb-4">
           {post.title}
         </h1>
-
         <img src={post.image} alt={post.title} className="w-full h-auto rounded-lg mt-4" />
-
-        {/* <PostContent content={post.content || ""} /> */}
-        <article className="prose lg:prose-xl dark:prose-invert max-w-none">           
-          {/* <Markdown remarkPlugins={[remarkGfm]}>{post.content || ""}</Markdown> */}
-          <MarkdownPreview markdown={post.content || "Algo deu errado..."} />
-          
-        </article>
+        {/* <article className="prose lg:prose-xl dark:prose-invert max-w-none"> */}
+          <MarkdownPreview markdown={post.content || "Algo deu errado..."} /> 
+        {/* </article> */}
 
         <div className="text-sm opacity-40 mt-4">
           {post.author && <span>Por: {post.author}</span>}

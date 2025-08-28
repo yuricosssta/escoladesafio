@@ -1,5 +1,3 @@
-# version: '3.8'
-
 services:
   api:
     build:
@@ -9,43 +7,34 @@ services:
       - "3001:3001"
     env_file:
       - ./BackEnd/.env
-    volumes:
-      - ./BackEnd:/usr/app
-      # - /usr/app/node_modules
-    working_dir: /usr/app
-    command: npm run start:dev
-  
-  # mobile:
-  #   build:
-  #     context: ./Mobile
-  #     dockerfile: Dockerfile
-  #   depends_on:
-  #     - api
-  #   ports:
-  #     - "8081:8081"
-  #     # - "19001:19001"
-  #     # - "19002:19002"
-  #   volumes:
-  #     - ./Mobile:/app
-  #     # - /app/node_modules
-  #   working_dir: /app
-  #   command: npx expo start --dev-client
-  #   # command: npx expo start --web
+    # Sem volumes de código ou command override
+    # healthcheck:
+    #   # Testa se a API está realmente pronta para receber requisições
+    #   test: ["CMD", "wget", "-q", "--spider", "http://localhost:3001/api"] # Crie uma rota /api ou /health no NestJS
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 5
+    networks:
+      - app-network
 
-  # frontend:
-  #   build:
-  #     context: ./FrontEnd
-  #     dockerfile: Dockerfile
-  #   depends_on:
-  #     - api
-  #   ports:
-  #     - "3000:3000"
-  #   env_file:
-  #     - ./FrontEnd/.env      
-  #   volumes:
-  #     - ./FrontEnd:/app/frontend
-  #     # - /app/node_modules
-  #   working_dir: /app/frontend
-  #   command: npm run dev
+  frontend:
+    build:
+      context: ./FrontEnd
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./FrontEnd/.env
+    # O depends_on agora espera a API estar "saudável" (healthcheck passar)
+    depends_on:
+      - api
+      # api:
+      #   condition: service_healthy
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
              
     
