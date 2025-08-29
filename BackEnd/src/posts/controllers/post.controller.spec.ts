@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PostController } from './post.controller';
+import { PostController } from '../../api/post.controller';
 import { PostService } from '../services/post.service';
 import { IUser } from  '../../users/schemas/models/user.interface'
 

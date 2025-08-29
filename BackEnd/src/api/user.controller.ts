@@ -13,16 +13,16 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ZodValidationPipe } from 'src/shared/pipe/zod-validation.pipe';
-import { LoggingInterceptor } from '../../shared/interceptors/logging.interceptor';
-import { UsersService } from '../services/user.service';
+import { LoggingInterceptor } from '../shared/interceptors/logging.interceptor';
+import { UsersService } from '../users/services/user.service';
 import {
   CreateUser,
   createUserSchema,
   UpdateUser,
   updateUserSchema,
-} from '../validations/users.zod';
-import { IUser } from '../schemas/models/user.interface';
-import { GetUser } from '../../shared/decorators/get-user-decorator';
+} from '../users/validations/users.zod';
+import { IUser } from '../users/schemas/models/user.interface';
+import { GetUser } from '../shared/decorators/get-user-decorator';
 
 
 @UseInterceptors(LoggingInterceptor)
