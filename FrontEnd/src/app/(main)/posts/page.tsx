@@ -11,7 +11,7 @@ export default async function PostsPage() {
   return (
 
     <div className="container mx-auto px-5 mb-10">
-      <PostList />
+      <PostList /> 
     </div>
   );
 }

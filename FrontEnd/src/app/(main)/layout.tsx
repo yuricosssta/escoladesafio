@@ -9,19 +9,19 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
-  const isAuthenticated = useSelector(selectIsAuthenticated);
-  const router = useRouter();
+  // const isAuthenticated = useSelector(selectIsAuthenticated);
+  // const router = useRouter();
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      router.push('/login');
-    }
-  }, [isAuthenticated, router]);
+  // useEffect(() => {
+  //   if (!isAuthenticated) {
+  //     router.push('/login');
+  //   }
+  // }, [isAuthenticated, router]);
 
-  // Renderiza um loader ou null enquanto verifica a autenticação para evitar piscar a tela
-  if (!isAuthenticated) {
-    return null;
-  }
+  // // Renderiza um loader ou null enquanto verifica a autenticação para evitar piscar a tela
+  // if (!isAuthenticated) {
+  //   return null;
+  // }
 
   return (
     <div>      
