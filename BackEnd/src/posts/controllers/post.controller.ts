@@ -16,7 +16,7 @@ import {
   UseInterceptors,
   UsePipes,
 } from '@nestjs/common';
-import { PostService } from '../posts/services/post.service';
+import { PostService } from '../services/post.service';
 import { z } from 'zod';
 import { ZodValidationPipe } from 'src/shared/pipe/zod-validation.pipe';
 import { ApiBody } from '@nestjs/swagger';
