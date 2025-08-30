@@ -23,13 +23,13 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={cn(
-        "min-h-screen bg-backgroud font-sans antialiased max-w-6xl m-auto",
+        "min-h-screen bg-backgroud font-sans antialiased max-w-6xl m-auto", 
         // fontSans.variable
       )}>
         <Providers>
           <ReduxProvider>
             <AuthInitializer />
-            <Navbar />
+            {/* <Navbar /> */}
             {children}
             <Footer />
           </ReduxProvider>
