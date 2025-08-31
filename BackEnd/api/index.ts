@@ -4,17 +4,17 @@ import { ExpressAdapter } from '@nestjs/platform-express';
 import * as express from 'express';
 import { createServer, Server } from 'http';
 
-let cachedServer: Server;
+let server: Server;
 
 export default async function handler(req: any, res: any) {
-  if (!cachedServer) {
+  if (!server) {
     const expressApp = express();
     const adapter = new ExpressAdapter(expressApp);
-    const app = await NestFactory.create(AppModule, adapter);
+    const app = await NestFactory.create(AppModule, adapter, { logger: false });
 
     await app.init();
-    cachedServer = createServer(expressApp);
+    server = createServer(expressApp);
   }
 
-  return cachedServer.emit('request', req, res);
+  server.emit('request', req, res);
 }

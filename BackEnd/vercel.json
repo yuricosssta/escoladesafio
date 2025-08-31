@@ -1,28 +1,9 @@
 {
   "version": 2,
-  "buildCommand": "nest build",
-  "installCommand": "npm install --force",
-  "framework": null,
-  "outputDirectory": "dist",
   "builds": [
-    {
-      "src": "api/index.ts",
-      "use": "@vercel/node"
-    }
+    { "src": "api/index.ts", "use": "@vercel/node" }
   ],
   "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "api/index.ts",
-      "methods": [
-        "GET",
-        "POST",
-        "PUT",
-        "PATCH",
-        "DELETE",
-        "HEAD",
-        "OPTIONS"
-      ]
-    }
+    { "src": "/(.*)", "dest": "api/index.ts" }
   ]
 }
