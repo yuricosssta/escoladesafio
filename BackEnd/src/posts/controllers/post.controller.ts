@@ -18,12 +18,12 @@ import {
 } from '@nestjs/common';
 import { PostService } from '../services/post.service';
 import { z } from 'zod';
-import { ZodValidationPipe } from 'src/shared/pipe/zod-validation.pipe';
+import { ZodValidationPipe } from '../../shared/pipe/zod-validation.pipe';//'src/shared/pipe/zod-validation.pipe';
 import { ApiBody } from '@nestjs/swagger';
-import { LoggingInterceptor } from 'src/shared/interceptors/logging.interceptor';
-import { IUser } from 'src/users/schemas/models/user.interface';
-import { GetUser } from 'src/shared/decorators/get-user-decorator';
-import { AuthGuard } from 'src/auth/auth.guard'; 
+import { LoggingInterceptor } from '../../shared/interceptors/logging.interceptor';//'src/shared/interceptors/logging.interceptor';
+import { IUser } from '../../users/schemas/models/user.interface';//'src/users/schemas/models/user.interface';
+import { GetUser } from '../../shared/decorators/get-user-decorator';//'src/shared/decorators/get-user-decorator';
+import { AuthGuard } from '../../auth/auth.guard';//'src/auth/auth.guard'; 
 
 
 const createPostSchema = z.object({
