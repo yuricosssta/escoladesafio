@@ -38,7 +38,7 @@ async function bootstrap() {
 
 
   app.enableCors({
-    origin: ['https://vanguardatech.vercel.app/'],
+    origin: true, // Permite todas as origens. Para restringir, substitua true por uma URL específica ou uma função de validação.
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true, // Permite o envio de cookies e cabeçalhos de autorização
     allowedHeaders: 'Content-Type, Accept, Authorization',
