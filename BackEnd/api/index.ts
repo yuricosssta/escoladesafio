@@ -1,20 +1,18 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from '../src/app.module';
-import { ExpressAdapter } from '@nestjs/platform-express';
-import express from 'express';
-import { createServer, Server } from 'http';
+import { Server } from 'http';
+import { createServer, proxy } from 'vercel-node-serverless';
 
-let server: Server;
+let cachedServer: Server;
 
 export default async function handler(req: any, res: any) {
-  if (!server) {
-    const expressApp = express();
-    const adapter = new ExpressAdapter(expressApp);
-    const app = await NestFactory.create(AppModule, adapter, { logger: false });
-
+  if (!cachedServer) {
+    const app = await NestFactory.create(AppModule);
     await app.init();
-    server = createServer(expressApp);
+    const nestServer = app.getHttpAdapter().getInstance();
+    cachedServer = createServer(nestServer);
   }
-
-  server.emit('request', req, res);
+  // The 'proxy' function from 'vercel-node-serverless' likely handles the request forwarding.
+  // The exact return might not be necessary depending on the Vercel environment.
+  return proxy(req, res, cachedServer);
 }
