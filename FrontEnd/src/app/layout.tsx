@@ -29,7 +29,7 @@ export default function RootLayout({
         <Providers>
           <ReduxProvider>
             <AuthInitializer />
-            {/* <Navbar /> */}
+            <Navbar />
             {children}
             <Footer />
           </ReduxProvider>

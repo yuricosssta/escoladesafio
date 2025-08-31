@@ -4,6 +4,7 @@ import { useState, FormEvent, useEffect } from 'react';
 import { IPost } from '@/types/IPost';
 import { TextSummarizer } from './TextSummarizer';
 import MarkdownPreview from './MarkdownPreview';
+import markdownExample from '@/lib/markdownExample';
 
 interface PostFormProps {
   onSubmit: (post: Omit<IPost, 'id'> | IPost) => void;
@@ -100,6 +101,7 @@ export default function PostForm({ onSubmit, initialData, isLoading }: PostFormP
           onChange={handleChange}
           className="bg-white mt-1 block w-full px-3 py-2 border border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-black"
           required
+          defaultValue={markdownExample()} 
         />
       </div>
       <p className="text-sm text-gray-500">
