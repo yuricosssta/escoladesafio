@@ -5,11 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { AppDispatch, RootState } from '@/lib/redux/store';
 import { loginUser, selectIsAuthenticated } from '@/lib/redux/slices/authSlice';
+import Spinner from '@/components/Spinner';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch<AppDispatch>(); 
   const router = useRouter();
 
   const isAuthenticated = useSelector(selectIsAuthenticated);
@@ -57,10 +58,11 @@ export default function LoginPage() {
             disabled={status === 'loading'}
           >
             {status === 'loading' ? 'Entrando...' : 'Entrar'}
+            {status === 'loading' && <Spinner />} 
           </button>
           {error && <p className="mt-4 text-sm text-red-600 text-center">{error}</p>}
         </form>
       </div>
     </div>
   );
-}
+} 

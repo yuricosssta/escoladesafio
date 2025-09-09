@@ -30,8 +30,8 @@ const initialState: AuthState = {
 };
 
 export const loginUser = createAsyncThunk<AuthResponse, { email: string; password: string }>(
-  'auth/loginUser',
-  async (credentials) => {
+  'auth/loginUser', //nome da ação
+  async (credentials) => { //segunda parte: função assíncrona que faz a chamada à API
     const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/login`, credentials);
     return response.data;
   }
@@ -59,9 +59,9 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action: PayloadAction<AuthResponse>) => {
         state.status = 'succeeded';
-        state.token = action.payload.token;
+        state.token = action.payload.token; // Atualiza o token no estado
         state.isAuthenticated = true;
-        localStorage.setItem('token', action.payload.token);
+        localStorage.setItem('token', action.payload.token); // Armazena o token no localStorage
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.status = 'failed';
@@ -74,5 +74,6 @@ export const { setAuthState, logout } = authSlice.actions;
 
 export const selectIsAuthenticated = (state: RootState) => state.auth.isAuthenticated;
 export const selectAuthToken = (state: RootState) => state.auth.token;
+export const selectAuthStatus = (state: RootState) => state.auth.status;
 
-export default authSlice.reducer;
+export default authSlice.reducer; 
