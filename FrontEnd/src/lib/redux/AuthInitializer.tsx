@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setAuthState } from './slices/authSlice';
 
-export function AuthInitializer() {
+export function AuthInitializer() { 
   const dispatch = useDispatch();
 
   useEffect(() => {

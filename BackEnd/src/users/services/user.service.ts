@@ -31,6 +31,12 @@ async findOne(email: string): Promise<IUser | undefined> {
     return user;
   }
 
+    async findById(id: string) {
+    // Usamos .select('-password') para que o Mongoose nunca retorne o campo da senha
+    const user = await this.userRepository.getUser(id);
+    return user;
+  }
+
   async createUser(user: CreateUser) {
     const hashedPassword = await bcrypt.hash(user.password, 10);
     try {

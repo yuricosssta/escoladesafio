@@ -30,7 +30,7 @@ export const Navbar: FunctionComponent = () => {
   const menuItems: MenuItem[] = [
     { name: "Inicial", href: "/posts" },
     { name: "Criar Post", href: "/posts/new" },
-    { name: "Configurações", href: "/about" },
+    { name: "Configurações", href: "/dashboard" },
     { name: "Sair", onClick: handleLogout },
   ];
 

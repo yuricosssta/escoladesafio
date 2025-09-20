@@ -4,7 +4,7 @@ import { RootState } from '../store';
 
 // Supondo que a API de login retorne { token: string }
 interface AuthResponse {
-  token: string;
+  access_token: string;
 }
 
 interface AuthState {
@@ -59,9 +59,9 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action: PayloadAction<AuthResponse>) => {
         state.status = 'succeeded';
-        state.token = action.payload.token; // Atualiza o token no estado
+        state.token = action.payload.access_token; // Atualiza o token no estado
         state.isAuthenticated = true;
-        localStorage.setItem('token', action.payload.token); // Armazena o token no localStorage
+        localStorage.setItem('token', action.payload.access_token); // Armazena o token no localStorage
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.status = 'failed';

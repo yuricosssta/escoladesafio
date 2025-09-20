@@ -23,6 +23,7 @@ import {
 } from '../validations/users.zod';
 import { IUser } from '../schemas/models/user.interface';
 import { GetUser } from '../../shared/decorators/get-user-decorator';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 
 @UseInterceptors(LoggingInterceptor)
@@ -38,6 +39,13 @@ export class UsersController {
   async searchUser(@Query('term') term: string) {
     return this.userService.searchUser(term);
   }
+
+  @UseGuards(AuthGuard)
+  @Get('profile')
+  async getProfile(@GetUser('sub') userId: string) {
+    return this.userService.getUser(userId);
+  }
+
   @Get(':userId')
   async getUser(@Param('userId') userId: string) {
     return this.userService.getUser(userId);

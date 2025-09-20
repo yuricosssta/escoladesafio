@@ -12,7 +12,7 @@ export class UsersMongooseRepository implements UsersRepository {
   }
 
   getUser(userId: string): Promise<IUser> {
-    return this.userModel.findById(userId).exec();
+    return this.userModel.findById(userId).select('-password').exec(); //adicionado select para não retornar a senha
   }
 
   searchUser(term: string): Promise<IUser[]> {

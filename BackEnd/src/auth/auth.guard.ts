@@ -13,7 +13,7 @@ import { ConfigService } from '@nestjs/config';
 export class AuthGuard implements CanActivate {
   constructor(
     private jwtService: JwtService,
-    private configService: ConfigService, // ConfigService is used to access environment variables
+    private configService: ConfigService,
 ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {

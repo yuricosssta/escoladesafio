@@ -16,11 +16,11 @@ import { AuthGuard } from './auth/auth.guard';
       isGlobal: true,
     }),
     MongooseModule.forRoot(process.env.MONGO_URI),
-    // JwtModule.register({
-    //   global: true,
-    //   secret: process.env.JWT_SECRET,
-    //   signOptions: { expiresIn: '90m' },
-    // }),
+    JwtModule.register({
+      global: true,
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '1h' },
+    }),
     UsersModule,
     AuthModule,
     PostModule,

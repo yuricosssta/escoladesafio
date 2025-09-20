@@ -10,7 +10,7 @@ import Spinner from '@/components/Spinner';
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const dispatch = useDispatch<AppDispatch>(); 
+  const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
 
   const isAuthenticated = useSelector(selectIsAuthenticated);
