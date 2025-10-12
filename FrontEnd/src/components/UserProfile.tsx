@@ -42,8 +42,8 @@ export const UserProfile = () => {
           <p className="text-lg text-gray-900 capitalize">{profile.rule || 'Não definido'}</p>
         </div>
         <div className="pt-4">
-          {/* A lógica para a mudança de senha seria uma nova feature */}
-          <button className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">
+          {/* A lógica para a mudança de senha seria uma nova feature  */}
+          <button className="w-full flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium text-white bg-neutral-950 hover:bg-neutral-700 disabled:bg-neutral-300">
             Mudar a Senha
           </button>
         </div>

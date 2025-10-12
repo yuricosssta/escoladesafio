@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { IPost } from "../types/IPost";
-import { useEffect } from 'react'; // ✅ MELHORIA 3: useState removido
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/lib/redux/store';
 import { fetchPosts, deletePost } from '@/lib/redux/slices/postsSlice';

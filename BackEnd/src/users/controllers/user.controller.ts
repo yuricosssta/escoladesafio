@@ -26,7 +26,7 @@ import { GetUser } from '../../shared/decorators/get-user-decorator';
 import { AuthGuard } from 'src/auth/auth.guard';
 
 
-@UseInterceptors(LoggingInterceptor)
+@UseInterceptors(LoggingInterceptor) 
 @Controller('users')
 export class UsersController {
   constructor(private readonly userService: UsersService) { }
