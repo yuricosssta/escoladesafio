@@ -48,14 +48,13 @@ export const PostList = () => {
         {posts.map((post) => (
           <div className="break-words" key={post._id}>
             <Link href={`/posts/${post._id}`}>
-              <div className="aspect-[16/9] relative cursor-pointer bg-gray-200">
-                {/* <Image
-                  alt={post.title}
+              <div className="fill aspect-[16/9] relative cursor-pointer bg-gray-200">
+                 <img 
+                  alt={post.title} 
                   className="object-cover"
                   src={post.image || "https://placehold.co/600x400"}
-                  fill
                   sizes="(max-width: 768px) 100vw, 50vw"
-                /> */}
+                /> 
               </div>
             </Link>
             <div className="grid grid-cols-1 gap-3 md:col-span-2 mt-4">
