@@ -33,7 +33,7 @@ export const loginUser = createAsyncThunk<AuthResponse, { email: string; passwor
   'auth/loginUser', //nome da ação
   async (credentials) => { //segunda parte: função assíncrona que faz a chamada à API
     const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/login`, credentials);
-    return response.data;
+    return response.data; 
   }
 );
 

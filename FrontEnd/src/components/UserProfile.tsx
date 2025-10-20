@@ -10,7 +10,7 @@ export const UserProfile = () => {
   const { profile, status, error } = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
-    dispatch(fetchUserProfile());
+    dispatch(fetchUserProfile()); 
   }, [dispatch]);
 
   if (status === 'loading') {

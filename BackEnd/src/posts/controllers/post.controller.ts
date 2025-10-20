@@ -55,7 +55,7 @@ const updatePostSchema = z.object({
 type CreatePost = z.infer<typeof createPostSchema>;
 type UpdatePost = z.infer<typeof updatePostSchema>;
 
-const SwaggerCreatePostSchema = {
+const SwaggerCreatePostSchema = { 
   schema: {
     type: 'object',
     properties: {
@@ -73,12 +73,12 @@ const SwaggerCreatePostSchema = {
 export class PostController {
   constructor(private readonly postService: PostService) { }
   // @UseGuards(JwtAuthGuard)
-  
+
   // @Get()
   // async getAllPosts() {
   //   return this.postService.getAllPosts();
   // }
- @Get()
+  @Get()
   async getAllPosts(
     // Captura 'page' e 'limit' da URL. Define valores padrão se não forem fornecidos.
     // ParseIntPipe converte a string da URL para número.
@@ -92,23 +92,23 @@ export class PostController {
     return this.postService.getAllPosts(page, limit);
   }
 
-  
+
   @Get('search')
   async searchPost(@Query('term') term: string) {
     return this.postService.searchPost(term);
   }
-  
+
   @Get(':postId')
   async getPost(@Param('postId') postId: string) {
     return this.postService.getPost(postId);
   }
 
-  // @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   @Post()
   async createPost(@Body(new ZodValidationPipe(createPostSchema))
   { title, description, content, image, author }: CreatePost
   ) {
-      
+
     const postData = { title, description, content, image, author };
     console.log('Dados recebidos:', postData);
     return this.postService.createPost({
@@ -145,7 +145,7 @@ export class PostController {
   // }
 
 
-
+  @UseGuards(AuthGuard)
   @Put(':postId')
   async updatePost(
     @Param('postId') postId: string,
@@ -154,6 +154,8 @@ export class PostController {
   ) {
     return this.postService.updatePost(postId, { title, description, content, modified_at, image, author, published });
   }
+
+  @UseGuards(AuthGuard)
   @Delete(':postId')
   async deletePost(@Param('postId') postId: string) {
     return this.postService.deletePost(postId);

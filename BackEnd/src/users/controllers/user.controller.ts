@@ -26,15 +26,18 @@ import { GetUser } from '../../shared/decorators/get-user-decorator';
 import { AuthGuard } from 'src/auth/auth.guard';
 
 
-@UseInterceptors(LoggingInterceptor) 
+@UseInterceptors(LoggingInterceptor)
 @Controller('users')
 export class UsersController {
   constructor(private readonly userService: UsersService) { }
+
+  @UseGuards(AuthGuard)
   @Get()
   async getAllUsers() {
     return this.userService.getAllUsers();
   }
- 
+
+  @UseGuards(AuthGuard)
   @Get('search')
   async searchUser(@Query('term') term: string) {
     return this.userService.searchUser(term);
@@ -46,20 +49,21 @@ export class UsersController {
     return this.userService.getUser(userId);
   }
 
+  @UseGuards(AuthGuard)
   @Get(':userId')
   async getUser(@Param('userId') userId: string) {
     return this.userService.getUser(userId);
   }
-  
 
+  @UseGuards(AuthGuard)
   @Post()
   async createUser(
     @Body(new ZodValidationPipe(createUserSchema)) user: CreateUser,
   ) {
     return this.userService.createUser(user);
   }
-  
-  
+
+  @UseGuards(AuthGuard)
   @Put(':userId')
   async updateUser(
     @Param('userId') userId: string,
@@ -68,8 +72,8 @@ export class UsersController {
   ) {
     return this.userService.updateUser(userId, { name, isAdmin, rule });
   }
-  
-  
+
+  @UseGuards(AuthGuard)
   @Delete(':userId')
   async deleteUser(@Param('userId') userId: string) {
     return this.userService.deleteUser(userId);

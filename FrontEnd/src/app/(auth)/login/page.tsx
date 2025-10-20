@@ -23,16 +23,17 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.push('/posts'); // Redireciona para a lista de posts após o login
+      // router.push('/posts'); // Redireciona para a lista de posts após o login
+      router.back();
     }
   }, [isAuthenticated, router]);
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-backgroud text-gray-700"> 
+    <div className="flex items-center justify-center min-h-screen bg-backgroud text-gray-700">
       <div className="p-8 bg-white rounded-lg shadow-md w-96">
         <h1 className="text-2xl font-bold mb-6 text-center">login</h1>
         <form onSubmit={handleSubmit}>
-          <div className="mb-4"> 
+          <div className="mb-4">
             <label className="block mb-2 text-sm font-medium text-gray-700">Email</label>
             <input
               type="email"
@@ -58,7 +59,7 @@ export default function LoginPage() {
             disabled={status === 'loading'}
           >
             {status === 'loading' ? 'Entrando...' : 'Entrar'}
-            {status === 'loading' && <Spinner />} 
+            {status === 'loading' && <Spinner />}
           </button>
           {error && <p className="mt-4 text-sm text-red-600 text-center">{error}</p>}
         </form>
