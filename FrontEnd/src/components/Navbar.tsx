@@ -9,6 +9,7 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTrigger } from
 import { Menu } from 'lucide-react';
 import { FunctionComponent } from 'react';
 import { cn } from '@/lib/utils';
+import { UserNav } from './UserNav';
 
 interface MenuItem {
   name: string;
@@ -31,7 +32,7 @@ export const Navbar: FunctionComponent = () => {
     { name: "Inicial", href: "/posts" },
     { name: "Criar Post", href: "/posts/new" },
     { name: "Configurações", href: "/dashboard" },
-    { name: "Sair", onClick: handleLogout },
+    // { name: "Sair", onClick: handleLogout },
   ];
 
   return (
@@ -68,6 +69,7 @@ export const Navbar: FunctionComponent = () => {
               )}
             </div>
           ))}
+          <UserNav />
         </div>
         <div className="md:hidden">
           <Sheet>

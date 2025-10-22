@@ -24,7 +24,11 @@ export class AuthService {
       console.log('Senha incorreta');
       throw new UnauthorizedException();
     }
-    const payload = { sub: user.id, email: user.email };
+    const payload = { 
+      sub: user.id, 
+      email: user.email,
+      role: user.rule // substituir esse no 'rule' pelo 'role' no futuro
+    };
     console.log('Payload:', payload);
 
     return {
