@@ -12,7 +12,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
   const router = useRouter();
 
 
-  
+
   useEffect(() => {
     if (!isAuthenticated) {
       router.push('/login');
@@ -25,12 +25,12 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
   }
 
   return (
-    <div>      
-      <main className="p-8">
-        <Navbar />      
-        {children}
-        <Footer />
-      </main>      
+    <div className="container mx-auto px-5 mb-10">
+      {/* <main className="p-8">  */}
+      <Navbar />
+      {children}
+      <Footer />
+      {/* </main>       */}
     </div>
   );
 }
