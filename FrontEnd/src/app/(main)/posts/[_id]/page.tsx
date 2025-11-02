@@ -37,19 +37,18 @@ export default function PostDetailPage() {
   if (status === 'failed') {
     return <div className="text-center mt-10 text-red-500">Erro ao carregar a publicação: {error}</div>;
   }
-  
+
   // Garante que o post carregado corresponde ao ID da URL para evitar mostrar dados antigos
   if (currentPost._id !== id) {
-     return <div className="text-center mt-10">Carregando publicação...</div>;
+    return <div className="text-center mt-10">Carregando publicação...</div>;
   }
 
   return (
-    
-    <div className="container mx-auto px-5">
-       <div>
-        <BlogPostContent post={currentPost}/>
-       </div>
-       {/* <Footer /> */}
+
+    // <div className="container mx-auto px-5">
+    <div>
+      <BlogPostContent post={currentPost} />
     </div>
+    // </div>
   );
 } 
