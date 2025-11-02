@@ -7,6 +7,7 @@ import { Providers } from "./providers";
 import { Navbar } from "@/components/Navbar";
 import { AuthInitializer } from "@/lib/redux/AuthInitializer";
 import { Footer } from "@/components/Footer";
+import { SessionExpiredModal } from "@/components/SessionExpiredModal";
 
 const fontSans = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -29,9 +30,10 @@ export default function RootLayout({
         <Providers>
           <ReduxProvider>
             <AuthInitializer />
-            <Navbar />
+            <SessionExpiredModal />
+            {/* <Navbar /> */}
             {children}
-            <Footer />
+            {/* <Footer /> */}
           </ReduxProvider>
         </Providers>
       </body>

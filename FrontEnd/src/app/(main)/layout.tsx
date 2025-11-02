@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { selectIsAuthenticated } from '@/lib/redux/slices/authSlice';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { Navbar } from '@/components/Navbar';
+import { Footer } from '@/components/Footer';
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   const isAuthenticated = useSelector(selectIsAuthenticated);
@@ -25,8 +27,9 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
   return (
     <div>      
       <main className="p-8">
-        {/* <Navbar />       */}
+        <Navbar />      
         {children}
+        <Footer />
       </main>      
     </div>
   );

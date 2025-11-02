@@ -2,7 +2,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RootState } from '../store';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 interface UserPayload {
   sub: string;
@@ -20,6 +20,7 @@ interface AuthState {
   user: UserPayload | null;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null | undefined;
+  sessionExpired: boolean;
 }
 
 const initialState: AuthState = {
@@ -28,13 +29,14 @@ const initialState: AuthState = {
   user: null,
   status: 'idle',
   error: null,
+  sessionExpired: false,
 };
 
 export const loginUser = createAsyncThunk<AuthResponse, { email: string; password: string }>(
   'auth/loginUser', //nome da ação
   async (credentials) => {
     const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/login`, credentials);
-    return response.data; 
+    return response.data;
   }
 );
 
@@ -42,10 +44,11 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setAuthState: (state, action: PayloadAction<{ token: string | null; isAuthenticated: boolean }>) => {
+    // setAuthState: (state, action: PayloadAction<{ token: string | null; isAuthenticated: boolean }>) => {
+    setAuthState: (state, action: PayloadAction<{ token: string | null }>) => {
       const token = action.payload.token;
       // state.isAuthenticated = action.payload.isAuthenticated;
-      if (token){
+      if (token) {
         state.token = token;
         state.isAuthenticated = true;
         state.user = jwtDecode<UserPayload>(token);
@@ -58,9 +61,16 @@ const authSlice = createSlice({
 
     logout: (state) => {
       localStorage.removeItem('token');
-      state.token = null;
+      // state.token = null;
+      // state.isAuthenticated = false;
+      // state.user = null;
+      return initialState;
+    },
+    
+    sessionExpired: (state) => {
+      state.sessionExpired = true;
       state.isAuthenticated = false;
-      state.user = null;
+      state.token = null;
     },
   },
   extraReducers: (builder) => {
@@ -83,13 +93,14 @@ const authSlice = createSlice({
   },
 });
 
-export const { setAuthState, logout } = authSlice.actions;
+export const { setAuthState, logout, sessionExpired } = authSlice.actions;
 
 export const selectIsAuthenticated = (state: RootState) => state.auth.isAuthenticated;
 export const selectCurrentUser = (state: RootState) => state.auth.user;
 export const selectAuthToken = (state: RootState) => state.auth.token;
 export const selectAuthStatus = (state: RootState) => state.auth.status;
+export const selectSessionExpired = (state: RootState) => state.auth.sessionExpired;
 
-export default authSlice.reducer; 
+export default authSlice.reducer;
 
 

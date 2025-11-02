@@ -22,4 +22,16 @@ axiosInstance.interceptors.request.use(
   }
 );
 
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    if (error.response?.status === 401) {
+      const { store } = await import('@/lib/redux/store');
+      const { sessionExpired } = await import('@/lib/redux/slices/authSlice');
+      store.dispatch(sessionExpired());
+    }
+    return Promise.reject(error);
+  },
+);
+
 export default axiosInstance;
