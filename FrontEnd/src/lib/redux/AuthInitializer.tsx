@@ -16,7 +16,8 @@ export function AuthInitializer() {
     // Este código só roda no navegador
     const token = localStorage.getItem('token');
     if (token) {
-      dispatch(setAuthState({ token, isAuthenticated: true }));
+      // dispatch(setAuthState({ token, isAuthenticated: true }));
+      dispatch(setAuthState({ token }));
     }
   }, [dispatch]);
 
