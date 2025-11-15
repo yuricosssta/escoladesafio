@@ -9,6 +9,8 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/user.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth/auth.guard';
+import { TranscriptionModule } from './transcription/transcription.module';
+import { SummaryModule } from './summary/summary.module';
 
 @Module({
   imports: [
@@ -24,6 +26,8 @@ import { AuthGuard } from './auth/auth.guard';
     UsersModule,
     AuthModule,
     PostModule,
+    TranscriptionModule,
+    SummaryModule, 
   ],
   controllers: [AppController],
   providers: [AppService],// { provide: APP_GUARD, useClass: AuthGuard }],
