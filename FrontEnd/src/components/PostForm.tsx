@@ -5,6 +5,7 @@ import { IPost } from '@/types/IPost';
 import { TextSummarizer } from './TextSummarizer';
 import MarkdownPreview from './MarkdownPreview';
 import markdownExample from '@/lib/markdownExample';
+import { AudioTranscriber } from './AudioTranscriber';
 
 interface PostFormProps {
   onSubmit: (post: Omit<IPost, 'id'> | IPost) => void;
@@ -93,6 +94,7 @@ export default function PostForm({ onSubmit, initialData, isLoading }: PostFormP
       </div> */}
       <div>
         <label htmlFor="content" className="block text-sm font-medium text-white-700">Conteúdo</label>
+        <AudioTranscriber/> 
         <textarea
           name="content"
           id="content"

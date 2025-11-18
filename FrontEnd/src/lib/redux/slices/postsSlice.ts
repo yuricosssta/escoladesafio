@@ -1,3 +1,4 @@
+// FrontEnd/src/lib/redux/slices/postsSlice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { IPost } from '@/types/IPost';
 import axiosInstance from '@/lib/api/axiosInstance'; // Usaremos a instância configurada
@@ -80,6 +81,18 @@ export const deletePost = createAsyncThunk<string, string>('posts/deletePost', a
   return _id;
 });
 
+// export const transcribeAudioAPI = async (file: File): Promise<string> => {
+//   const formData = new FormData();
+//   formData.append('file', file);
+
+//   const response = await axiosInstance.post('/transcription/upload', formData, {
+//     headers: {
+//       'Content-Type': 'multipart/form-data',
+//     },
+//   });
+
+//   return response.data;
+// };
 
 const postsSlice = createSlice({
   name: 'posts',

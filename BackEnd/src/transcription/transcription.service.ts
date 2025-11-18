@@ -93,7 +93,7 @@
 // }
 
 // ------------------------------------------------ //
-
+//src/transcription/transcription.service.ts
 import { Injectable, BadRequestException, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
@@ -206,7 +206,7 @@ export class TranscriptionService {
     }
 
     const formData = new FormData();
-    formData.append('file', fs.createReadStream(filePath));
+    formData.append('file', fs.createReadStream(filePath), path.basename(filePath));
     formData.append('model', 'whisper-1');
 
     const headers = {

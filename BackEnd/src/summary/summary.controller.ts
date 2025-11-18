@@ -1,5 +1,5 @@
 import { Controller, HttpCode, HttpStatus, Post, Body } from '@nestjs/common';
-import  SummaryService  from './summary.service';
+import SummaryService  from './summary.service';
 
 @Controller('summary')
 export class SummaryController {
