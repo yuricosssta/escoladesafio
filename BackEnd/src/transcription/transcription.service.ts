@@ -206,7 +206,8 @@ export class TranscriptionService {
     }
 
     const formData = new FormData();
-    formData.append('file', fs.createReadStream(filePath), path.basename(filePath));
+    // formData.append('file', fs.createReadStream(filePath), path.basename(filePath));
+    formData.append('file', fs.createReadStream(filePath));
     formData.append('model', 'whisper-1');
 
     const headers = {
