@@ -1,11 +1,12 @@
+//src/components/PostForm.tsx
 "use client";
 
 import { useState, FormEvent, useEffect } from 'react';
 import { IPost } from '@/types/IPost';
-import { TextSummarizer } from './TextSummarizer';
 import MarkdownPreview from './MarkdownPreview';
 import markdownExample from '@/lib/markdownExample';
 import { AudioTranscriber } from './AudioTranscriber';
+import { summarizeTextAPI } from '@/lib/api/summaryService';
 
 interface PostFormProps {
   onSubmit: (post: Omit<IPost, 'id'> | IPost) => void;
@@ -18,9 +19,12 @@ export default function PostForm({ onSubmit, initialData, isLoading }: PostFormP
     title: '',
     image: '',
     description: '',
-    content: '',
+    content: markdownExample(),
     published: true,
   });
+
+  const [isLoadingText, setIsLoadingText] = useState<boolean>(false);
+  const [organizeError, setOrganizeError] = useState<string | null>(null);
 
   useEffect(() => {
     if (initialData) {
@@ -50,6 +54,30 @@ export default function PostForm({ onSubmit, initialData, isLoading }: PostFormP
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     onSubmit(initialData ? { ...initialData, ...post } : post);
+  };
+
+  const organizaTexto = async (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    const textToOrganize = post.content;
+
+    if (!textToOrganize || !textToOrganize.trim()) {
+      setOrganizeError('Por favor, insira um texto no conteúdo para organizar.');
+      return;
+    }
+
+    setIsLoadingText(true);
+    setOrganizeError(null);
+
+    try {
+      console.log('Carregando texto...');
+      const result = await summarizeTextAPI(textToOrganize);
+      setPost(prev => ({ ...prev, content: result }));
+    } catch (err: any) {
+      setOrganizeError("Erro ao organizar: " + err.message);
+    } finally {
+      setIsLoadingText(false);
+    }
   };
 
   return (
@@ -94,17 +122,29 @@ export default function PostForm({ onSubmit, initialData, isLoading }: PostFormP
       </div> */}
       <div>
         <label htmlFor="content" className="block text-sm font-medium text-white-700">Conteúdo</label>
-        <AudioTranscriber/> 
+        <AudioTranscriber />
         <textarea
           name="content"
           id="content"
-          rows={10} 
+          rows={10}
           value={post.content}
           onChange={handleChange}
           className="bg-white mt-1 block w-full px-3 py-2 border border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-black"
           required
-          defaultValue={markdownExample()} 
+          defaultValue={markdownExample()}
         />
+        <div className="mt-2">
+          <button
+            type="button"
+            id="organize-button"
+            disabled={isLoadingText}
+            onClick={organizaTexto}
+            className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 disabled:bg-indigo-300 disabled:cursor-not-allowed"
+          >
+            {isLoadingText ? 'Organizando...' : 'Organizar conteúdo com IA'}
+          </button>
+          {organizeError && <div className="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg">{organizeError}</div>}
+        </div>
       </div>
       <p className="text-sm text-gray-500">
         Dica: Você pode usar <a href="https://www.markdownguide.org/cheat-sheet/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Markdown</a> para formatar o conteúdo.
