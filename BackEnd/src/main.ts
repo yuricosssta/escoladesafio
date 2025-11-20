@@ -38,7 +38,7 @@ import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './shared/filters/http-exception.filter';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ExpressAdapter } from '@nestjs/platform-express';
-import * as express from 'express';
+import express from 'express';
 import { INestApplication } from '@nestjs/common';
 
 // Variável para armazenar o servidor em cache (evita cold starts lentos na Vercel)
