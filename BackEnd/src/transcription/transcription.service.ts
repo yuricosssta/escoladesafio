@@ -8,6 +8,7 @@ import FormData from 'form-data';
 import { firstValueFrom } from 'rxjs';
 import YtDlpWrap from 'yt-dlp-wrap';
 import { File as MulterFile } from 'multer';
+import OpenAI from 'openai';
 
 @Injectable()
 export class TranscriptionService {
@@ -101,35 +102,39 @@ export class TranscriptionService {
     });
   }
 
-  /**
-   * Envia o arquivo para o Whisper API da OpenAI
-   */
   private async sendToWhisper(filePath: string): Promise<string> {
     const apiKey = this.configService.get<string>('OPENAI_API_KEY');
     if (!apiKey) {
       throw new InternalServerErrorException('Chave da API da OpenAI não configurada.');
     }
 
-    const formData = new FormData();
-    formData.append('file', fs.createReadStream(filePath), path.basename(filePath));
-    // formData.append('file', fs.createReadStream(filePath));
-    formData.append('model', 'whisper-1');
+    const openai = new OpenAI({ apiKey });
+    
+    // const formData = new FormData();
+    // formData.append('file', fs.createReadStream(filePath), path.basename(filePath));
+    // // formData.append('file', fs.createReadStream(filePath));
+    // formData.append('model', 'whisper-1');
 
-    const headers = {
-      'Authorization': `Bearer ${apiKey}`,
-      ...formData.getHeaders(),
-    };
+    // const headers = {
+    //   'Authorization': `Bearer ${apiKey}`,
+    //   ...formData.getHeaders(),
+    // };
 
-    const url = 'https://api.openai.com/v1/audio/transcriptions';
+    // const url = 'https://api.openai.com/v1/audio/transcriptions';
 
     try {
       console.log('Enviando áudio para transcrição...');
-      const response = await firstValueFrom(
-        this.httpService.post(url, formData, { headers })
-      );
-      return response.data.text;
+      // const response = await firstValueFrom(
+      //   this.httpService.post(url, formData, { headers })
+      // );
+      const response = await openai.audio.transcriptions.create({
+        file: fs.createReadStream(filePath),
+        model: 'whisper-1',
+      });
+      // return response.data.text;
+      return response.text;
     } catch (error) {
-      console.error('Erro ao chamar a API de transcrição:', error.response?.data);
+      console.error('Erro ao chamar a API de transcrição:', error);
       throw new InternalServerErrorException('Falha na comunicação com a API de transcrição.');
     }
   }
