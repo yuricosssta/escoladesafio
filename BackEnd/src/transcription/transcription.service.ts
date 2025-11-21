@@ -7,19 +7,21 @@ import * as path from 'path';
 import YtDlpWrap from 'yt-dlp-wrap';
 import { File as MulterFile } from 'multer';
 import OpenAI from 'openai';
+import * as os from 'os';
 
 @Injectable()
 export class TranscriptionService {
-  private readonly tempDir = path.join(__dirname, '..', '..', 'temp');
+  private readonly tempDir = os.tmpdir();
+  // private readonly tempDir = path.join(__dirname, '..', '..', 'temp');
   private readonly ytDlp: YtDlpWrap;
 
   constructor(
     private readonly configService: ConfigService,
     private readonly httpService: HttpService,
   ) {
-    if (!fs.existsSync(this.tempDir)) {
-      fs.mkdirSync(this.tempDir);
-    }
+    // if (!fs.existsSync(this.tempDir)) {
+    //   fs.mkdirSync(this.tempDir);
+    // }
     this.ytDlp = new YtDlpWrap();
   }
 
