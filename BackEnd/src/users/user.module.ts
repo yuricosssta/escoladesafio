@@ -6,7 +6,7 @@ import { UsersMongooseRepository } from './repositories/mongoose/user.mongoose.r
 import { UsersRepository } from './repositories/user.repository';
 import { AuthUsersService } from '../auth/auth-users.service';
 import { UsersController } from './controllers/user.controller';
-import { AuthModule } from 'src/auth/auth.module';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [

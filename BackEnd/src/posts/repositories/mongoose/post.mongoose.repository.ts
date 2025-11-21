@@ -1,4 +1,4 @@
-// post.mongoose.repository.ts
+//src/post/repositories/mongoose/post.mongoose.repository.ts
 
 import { IPost } from '../../schemas/models/post.interface';
 import { PostRepository } from '../post.repository';

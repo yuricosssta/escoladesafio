@@ -12,7 +12,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ZodValidationPipe } from 'src/shared/pipe/zod-validation.pipe';
+import { ZodValidationPipe } from '../../shared/pipe/zod-validation.pipe';
 import { LoggingInterceptor } from '../../shared/interceptors/logging.interceptor';
 import { UsersService } from '../services/user.service';
 import {
@@ -21,9 +21,8 @@ import {
   UpdateUser,
   updateUserSchema,
 } from '../validations/users.zod';
-import { IUser } from '../schemas/models/user.interface';
 import { GetUser } from '../../shared/decorators/get-user-decorator';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from '../../auth/auth.guard';
 
 
 @UseInterceptors(LoggingInterceptor)
