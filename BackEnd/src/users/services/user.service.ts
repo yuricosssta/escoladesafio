@@ -7,7 +7,7 @@ import {
 import { UsersRepository } from '../repositories/user.repository';
 import { CreateUser, UpdateUser } from '../validations/users.zod';
 import * as bcrypt from 'bcrypt';
-import { IUser } from '../schemas//models/user.interface';//'../schemas/models/users.interface';
+import { IUser } from '../schemas//models/user.interface';
 
 @Injectable()
 export class UsersService {

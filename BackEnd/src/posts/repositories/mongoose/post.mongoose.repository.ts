@@ -3,7 +3,7 @@
 import { IPost } from '../../schemas/models/post.interface';
 import { PostRepository } from '../post.repository';
 import { InjectModel } from '@nestjs/mongoose';
-import { Post } from '../../../posts/schemas/post.schema';
+import { Post } from '../../schemas/post.schema';
 import { Model } from 'mongoose';
 
 // Interface para definir os parâmetros de paginação
