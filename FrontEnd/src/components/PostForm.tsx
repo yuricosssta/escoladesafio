@@ -19,7 +19,7 @@ export default function PostForm({ onSubmit, initialData, isLoading }: PostFormP
     title: '',
     image: '',
     description: '',
-    content: markdownExample(),
+    content: '',
     published: true,
   });
 

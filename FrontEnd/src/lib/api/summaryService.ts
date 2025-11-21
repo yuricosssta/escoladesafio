@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = `${process.env.NEXT_PUBLIC_SUMMARY_API_URL}/summary/text`;
+const API_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/summary/text`; 
 
 /**
  * Envia um texto para a API de resumo e retorna o resumo em string.
