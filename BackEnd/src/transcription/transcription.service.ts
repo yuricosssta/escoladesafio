@@ -4,8 +4,6 @@ import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 import * as fs from 'fs';
 import * as path from 'path';
-import FormData from 'form-data';
-import { firstValueFrom } from 'rxjs';
 import YtDlpWrap from 'yt-dlp-wrap';
 import { File as MulterFile } from 'multer';
 import OpenAI from 'openai';
