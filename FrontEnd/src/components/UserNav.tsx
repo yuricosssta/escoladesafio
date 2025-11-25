@@ -15,7 +15,7 @@ export const UserNav = () => {
   const handleLogout = () => {
     dispatch(logout());
     // Redireciona para a página de login após o logout
-    router.push('/auth/login');
+    router.push('/login');
   };
 
   return (
@@ -34,8 +34,8 @@ export const UserNav = () => {
         </>
       ) : (
         <Link 
-          href="/auth/login" 
-          className="bg-blue-500 text-white px-3 py-1 text-sm rounded hover:bg-blue-600"
+          href="/login" 
+          className="bg-blue-500 text-white px-3 py-1 text-sm rounded-none hover:bg-blue-600"
         >
           Login
         </Link>

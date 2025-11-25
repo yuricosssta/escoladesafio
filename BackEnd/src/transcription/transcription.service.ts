@@ -12,22 +12,15 @@ import * as os from 'os';
 @Injectable()
 export class TranscriptionService {
   private readonly tempDir = os.tmpdir();
-  // private readonly tempDir = path.join(__dirname, '..', '..', 'temp');
   private readonly ytDlp: YtDlpWrap;
 
   constructor(
     private readonly configService: ConfigService,
     private readonly httpService: HttpService,
   ) {
-    // if (!fs.existsSync(this.tempDir)) {
-    //   fs.mkdirSync(this.tempDir);
-    // }
     this.ytDlp = new YtDlpWrap();
   }
 
-  /**
-   * Transcreve a partir de uma URL do YouTube
-   */
   async transcribeFromYoutube(youtubeUrl: string): Promise<{ text: string }> {
     if (!youtubeUrl.includes('youtube.com') && !youtubeUrl.includes('youtu.be')) {
       throw new BadRequestException('URL do YouTube inválida.');
@@ -50,11 +43,8 @@ export class TranscriptionService {
     }
   }
 
-  /**
-   * Transcreve um arquivo de áudio enviado pelo usuário
-   * */
+  //  Transcreve um arquivo de áudio enviado pelo usuário
   async transcribeFromFile(file: MulterFile): Promise<{ text: string }> {
-  // async transcribeFromFile(file: Express.Multer.File): Promise<{ text: string }> {
     if (!file) {
       throw new BadRequestException('Nenhum arquivo foi enviado.');
     }
@@ -75,9 +65,7 @@ export class TranscriptionService {
     }
   }
 
-  /**
-   * Faz o download do áudio do YouTube com yt-dlp
-   */
+  //  Faz o download do áudio do YouTube com yt-dlp
   private downloadAudio(url: string, outputPath: string): Promise<void> {
     console.log(`Baixando áudio de: ${url}`);
 
