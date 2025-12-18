@@ -1,4 +1,4 @@
-# Escola Desafio — Plataforma Completa
+# Plataforma Completa
 
 Este repositório reúne a solução completa da plataforma **Escola Desafio**, composta por uma API RESTful (BackEnd) e um aplicativo mobile (FrontEnd).  
 O objetivo é oferecer autenticação segura, gerenciamento de usuários, posts e navegação moderna, utilizando tecnologias atuais do ecossistema JavaScript/TypeScript.
