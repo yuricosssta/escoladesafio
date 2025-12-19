@@ -22,7 +22,6 @@ export default function NewPostPage() {
   return (
     <div>
       <h1 className="text-3xl font-bold mb-6">Criar Nova Publicação</h1>
-      {/* <TextSummarizer /> */}
       <PostForm onSubmit={handleSubmit} isLoading={status === 'loading'} />
     </div>
   );

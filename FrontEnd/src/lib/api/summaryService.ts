@@ -18,6 +18,6 @@ export const summarizeTextAPI = async (text: string): Promise<string> => {
     // Trata erros de rede ou da API
     console.error('Erro ao chamar a API de resumo:', error);
     // Lança um erro para que o componente possa tratá-lo
-    throw new Error('Não foi possível gerar o resumo. Tente novamente.');
+    throw new Error('Não foi possível gerar o resumo. Entre em contato com o suporte se persistir.');
   }
 };

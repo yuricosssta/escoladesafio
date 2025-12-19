@@ -36,7 +36,7 @@ export const SessionExpiredModal = () => {
   // }, [isSessionExpired, countdown, dispatch]);
 
   // Se a sessão não expirou, não renderiza nada
-  if (!isSessionExpired) {
+  if (!isSessionExpired && isSessionExpired) {
     return null;
   }
 
