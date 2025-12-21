@@ -10,6 +10,10 @@ import { Menu } from 'lucide-react';
 import { FunctionComponent } from 'react';
 import { cn } from '@/lib/utils';
 import { UserNav } from './UserNav';
+import React from 'react';
+import { CheckCircle, AlertTriangle, Download, Database, Lock, ArrowRight } from 'lucide-react';
+import Image from 'next/image';
+import LogoBloco from './LogoBloco';
 
 interface MenuItem {
   name: string;
@@ -36,79 +40,21 @@ export const Navbar: FunctionComponent = () => {
   ];
 
   return (
-    <nav className='container mx-auto px-5'>
-      <section className="flex items-center justify-between mt-8 md:mt-16 mb-12 md:mb-16 px-4">
-        <Link href="/">
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tighter leading-tight">
-            Escola Desafio
-          </h1>
-        </Link>
-        <div className="hidden md:flex items-center">
+    // <div className="min-h-screen bg-stone-50 font-sans text-stone-800 selection:bg-[#8B4513] selection:text-white">
+      <nav  className="fixed w-full bg-white/80 backdrop-blur-md border-b border-stone-200 z-50">
+        <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+        <LogoBloco />
 
-          {menuItems.map((item) => (
-            <div key={item.name} className="ml-4 md:ml-8">
-              {item.href ? (
-                <Link
-                  href={item.href}
-                  target={item.openInNewTab ? "_blank" : "_self"}
-                  className={cn(
-                    "hover:text-gray-900",
-                    pathname === item.href && "font-semibold"
-                  )}
-                >
-                  {item.name}
-                </Link>
-              ) : (
-                <button
-                  type="button"
-                  onClick={item.onClick}
-                  className="hover:text-red-600 font-semibold"
-                >
-                  {item.name}
-                </button>
-              )}
-            </div>
-          ))}
-          <UserNav />
+          {/* Botão de Login */}
+          <button
+            type="button"
+            className="md:flex items-center gap-2 bg-stone-900 hover:bg-stone-700 text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-all shadow-sm"
+          >
+            <Lock size={14} />
+            Área de Membros
+          </button>
         </div>
-        <div className="md:hidden">
-          <Sheet>
-            <SheetTrigger>
-              <Menu size="24" />
-            </SheetTrigger>
-            <SheetContent>
-              <SheetHeader>
-                <SheetDescription>
-                  {menuItems.map((item) =>
-                    item.href ? (
-                      <Link
-                        key={item.name}
-                        href={item.href}
-                        target={item.openInNewTab ? "_blank" : "_self"}
-                        className={cn(
-                          "block py-2",
-                          pathname === item.href && "font-semibold"
-                        )}
-                      >
-                        {item.name}
-                      </Link>
-                    ) : (
-                      <button
-                        key={item.name}
-                        type="button"
-                        onClick={item.onClick}
-                        className="block py-2 text-left w-full hover:text-red-600 font-semibold"
-                      >
-                        {item.name}
-                      </button>
-                    )
-                  )}
-                </SheetDescription>
-              </SheetHeader>
-            </SheetContent>
-          </Sheet>
-        </div>
-      </section>
-    </nav>
+      </nav>
+     //</div>
   );
 };

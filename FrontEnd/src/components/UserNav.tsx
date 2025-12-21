@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { AppDispatch } from '@/lib/redux/store';
 import { logout, selectIsAuthenticated, selectCurrentUser } from '@/lib/redux/slices/authSlice';
 import { useRouter } from 'next/navigation';
+import { CheckCircle, AlertTriangle, Download, Database, Lock, ArrowRight } from 'lucide-react';
 
 export const UserNav = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -20,7 +21,7 @@ export const UserNav = () => {
 
   return (
     <div className="flex items-center gap-4">
-      {isAuthenticated && user ? (
+      {/* {isAuthenticated && user ? (
         <>
           <span className="text-sm text-gray-600">
             Olá, <Link href="/profile" className="font-bold hover:underline">{user.email}</Link>
@@ -39,7 +40,15 @@ export const UserNav = () => {
         >
           Login
         </Link>
-      )}
+      )} */}
+      {/* Botão de Login */}
+      <button
+        type="button"
+        className="md:flex items-center gap-2 bg-stone-900 hover:bg-stone-700 text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-all shadow-sm"
+      >
+        <Lock size={14} />
+        Área de Membros
+      </button>
     </div>
   );
 };

@@ -41,9 +41,9 @@ export const PostList = () => {
   }
 
   return (
-    <div>
+    <div className="min-h-screen bg-stone-50 font-sans text-stone-800 selection:bg-[#8B4513] selection:text-white">
       <div
-        className={`grid grid-cols-1 gap-16 md:grid-cols-2 px-4 transition-opacity duration-300 ${status === 'loading' ? 'opacity-50' : 'opacity-100'}`}
+        className={`relative pt-30 pb-24 px-4 overflow-hidden grid grid-cols-1 gap-16 md:grid-cols-2 px-4 transition-opacity duration-300 ${status === 'loading' ? 'opacity-50' : 'opacity-100'}`}
       >
         {posts.map((post) => (
           <div className="break-words" key={post._id}>
@@ -79,7 +79,7 @@ export const PostList = () => {
       </div>
 
       {/* Controles de Paginação */}
-      <div className="flex justify-center items-center gap-4 mt-16">
+      <div className="flex justify-center items-center gap-4 mt-16 bg-stone-50 font-sans text-stone-800 selection:bg-[#8B4513] selection:text-white">
         <button
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage <= 1 || status === 'loading'}

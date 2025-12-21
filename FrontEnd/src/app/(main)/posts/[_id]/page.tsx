@@ -46,7 +46,7 @@ export default function PostDetailPage() {
   return (
 
     // <div className="container mx-auto px-5">
-    <div>
+    <div className="relative pt-30 max-w-6xl mx-auto px-4 py-8 break-words"> 
       <BlogPostContent post={currentPost} />
     </div>
     // </div>

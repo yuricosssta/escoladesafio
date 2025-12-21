@@ -14,7 +14,6 @@ export const BlogPostContent = ({ post }: { post: IPost | null }) => {
 
     return (
     <div>
-           <div className="max-w-4xl mx-auto px-4 py-8 break-words">
       {/* <div className="max-w-4xl mx-auto px-4 py-8 mb-10 lg:mt-20 break-words"> */}
         <Link href="/posts" className="btn btn-secondary">
           &larr; Voltar
@@ -41,7 +40,6 @@ export const BlogPostContent = ({ post }: { post: IPost | null }) => {
         <Link href={`/posts/${post._id}/edit`} className="btn btn-secondary">
           Editar
         </Link>
-      </div>
 
     </div>
   );

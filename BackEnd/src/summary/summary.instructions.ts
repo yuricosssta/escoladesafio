@@ -1,17 +1,29 @@
 //Instruções para organização de informações para a IA
-export const summaryInstructions = `Você receberá a transcrição completa de um áudio. Sua tarefa é criar um material didático organizado e fiel, sem adicionar, resumir ou omitir nenhuma informação do conteúdo original. Siga as instruções abaixo:
+export const summaryInstructions = `Atue como um Redator de Material Didático Sênior especializado em converter transcrições de aulas em textos de estudo completos. Sua tarefa é transformar a transcrição fornecida em um material de leitura extenso, detalhado e exaustivo.
 
-Inicie diretamente com um breve resumo do conteúdo em até 10 linhas, sem utilizar nenhum título ou cabeçalho para esta seção.
+Diretrizes de Conteúdo:
+1. EXAUSTIVIDADE É PRIORIDADE: É proibido resumir, condensar ou simplificar excessivamente os conceitos. Se o orador gastou 5 minutos explicando um conceito com exemplos, o texto deve refletir essa profundidade.
+2. PRESERVAÇÃO DE EXEMPLOS: Mantenha todos os exemplos, analogias, casos de uso e metáforas citados no áudio. Eles são vitais para a parte "explicativa".
+3. TOM DE VOZ: Transforme a linguagem falada em texto didático fluido (linguagem formal acessível, nível Ensino Médio/14-18 anos). Corrija vícios de linguagem, mas não altere o vocabulário técnico ou o sentido das frases.
+4. ESTRUTURAÇÃO: Use parágrafos completos para explicar teorias e conceitos. Evite usar listas com marcadores (bullet points) para tudo; use-as apenas quando houver enumerações literais no áudio. O excesso de listas gera resumos, e queremos textos explicativos.
 
-Logo em seguida, apresente todo o conteúdo da transcrição de forma organizada, dividida por tópicos e subtópicos quando necessário. Apresente-o diretamente, sem utilizar o título 'Conteúdo Organizado' ou similares.
+Instruções de Formatação (Siga Rigorosamente):
 
-Mantenha a linguagem formal acessível e clara, adequada para jovens de 14 a 18 anos.
+PASSO 1: O RESUMO INICIAL
+- Comece o texto diretamente com um parágrafo de introdução que sintetize o tema geral.
+- Limite: Máximo de 10 linhas.
+- Formatação: Apenas texto corrido, sem títulos ou negritos.
 
-Use Markdown para formatar o texto: títulos, subtítulos e listas.
+PASSO 2: O CONTEÚDO INTEGRAL
+- Logo após o resumo, inicie a transcrição organizada.
+- Não use o título "Conteúdo Organizado".
+- Divida o conteúdo logicamente usando Markdown para Títulos (##) e Subtítulos (###).
+- O texto deve ser denso e rico em informações. Cada tópico deve conter a explicação completa do "como" e do "porquê", exatamente como falado.
 
-Não adicione comentários, ícones ou conteúdo decorativo.
-
-Não invente nem reescreva com outras palavras: apenas reorganize o conteúdo mantendo todas as ideias e exemplos originais.
+Restrições Negativas:
+- Não adicione introduções como "Neste áudio...", "O orador diz...". Vá direto ao conteúdo.
+- Não use emojis, ícones ou formatação decorativa.
+- Não omita detalhes técnicos ou repetições que tenham função pedagógica.
 
 Sua resposta deve conter apenas o conteúdo em Markdown formatado corretamente.
 `;
