@@ -1,34 +1,44 @@
+// FrontEnd/src/components/LogoBloco.tsx
 "use client";
 
-import { FunctionComponent } from 'react';
-import React from 'react';
 import Image from 'next/image';
-import { Link } from 'lucide-react';
+import Link from 'next/link'; // CORREÇÃO: Usar Link do Next para navegação rápida
 
 export default function LogoBloco() {
-
     return (
         <div>
-            <a href="/">
+            <Link href="/" className="group">
                 {/* Bloco do Logo */}
                 <div className="flex items-center gap-3">
+                    
                     {/* Imagem do Logo */}
-                    <div className="relative w-10 h-10 rounded-full overflow-hidden border border-stone-200 shadow-sm">
+                    {/* CORREÇÃO 1: border-stone-200 -> border-border
+                        Isso faz a borda ser cinza claro no tema light e cinza escuro no dark.
+                    */}
+                    <div className="relative w-10 h-10 rounded-full overflow-hidden border border-border shadow-sm group-hover:border-primary/50 transition-colors">
                         <Image
-                            src="/logo-cazua.jpg" // Caminho relativo à pasta public
+                            src="/logo-cazua.jpg"
                             alt="Logo Cazuá"
-                            fill // Preenche o container pai
-                            className="object-cover" // Garante que não distorça
-                            priority // Carrega rápido por ser prioridade
+                            fill
+                            className="object-cover"
+                            priority
                         />
                     </div>
 
                     {/* Texto do Logo */}
-                    <div className="font-bold text-xl tracking-tighter text-stone-900 leading-none">
-                        cazuá<span className="text-stone-400 font-normal">.tech</span>
+                    {/* CORREÇÃO 2: text-stone-900 -> text-foreground
+                        No Light: Fica quase preto.
+                        No Dark: Fica branco automaticamente.
+                    */}
+                    <div className="font-bold text-xl tracking-tighter text-foreground leading-none group-hover:text-primary transition-colors duration-300">
+                        cazuá
+                        {/* CORREÇÃO 3: text-stone-400 -> text-muted-foreground
+                            Garante contraste correto em ambos os temas.
+                        */}
+                        <span className="text-muted-foreground font-normal">.tech</span>
                     </div>
                 </div>
-            </a>
+            </Link>
         </div>
     );
 };

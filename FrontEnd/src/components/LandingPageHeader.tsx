@@ -1,3 +1,4 @@
+// FrontEnd/src/components/LandingPageHeader.tsx
 "use client";
 
 import { cn } from "@/lib/utils";
@@ -20,58 +21,12 @@ interface NavProps {
   }[];
 }
 
-// function SignInSignUpButtons() {
-//   const app = useStackApp();
-//   return (
-//     <>
-//       <Link
-//         href={app.urls.signIn}
-//         className={buttonVariants({ variant: "secondary" })}
-//       >
-//         Sign In
-//       </Link>
-
-//       <Link
-//         href={app.urls.signUp}
-//         className={buttonVariants({ variant: "default" })}
-//       >
-//         Sign Up
-//       </Link>
-//     </>
-//   );
-// }
-
-// function AuthButtonsInner() {
-//   const user = useUser();
-
-//   if (user) {
-//     return (
-//       <Link
-//         href="/dashboard"
-//         className={buttonVariants({ variant: "default" })}
-//       >
-//         Dashboard
-//       </Link>
-//     );
-//   } else {
-//     return <SignInSignUpButtons />;
-//   }
-// }
-
-// function AuthButtons() {
-//   return (
-//     <React.Suspense fallback={<SignInSignUpButtons />}>
-//       <AuthButtonsInner />
-//     </React.Suspense>
-//   );
-// }
-
 function MobileItems(props: NavProps) {
   return (
     <div className="fixed inset-0 top-16 z-50 grid h-[calc(100vh-4rem)] grid-flow-row auto-rows-max overflow-auto p-6 pb-32 animate-in slide-in-from-bottom-80 md:hidden">
       <div className="relative z-20 grid gap-6 rounded-md bg-popover p-4 text-popover-foreground shadow-md">
         <nav className="grid grid-flow-row auto-rows-max text-sm">
-          
+
           {props.items?.map((item, index) => (
             <Link
               key={index}
@@ -102,7 +57,8 @@ function DesktopItems(props: NavProps) {
 
   return (
     <nav className="hidden gap-6 md:flex">
-      <LogoBloco />
+      {/* Logo Desktop: Aparece antes do menu */}
+      <LogoBloco /> 
       {props.items?.map((item, index) => (
         <Link
           key={index}
@@ -128,12 +84,14 @@ export function LandingPageHeader(props: NavProps) {
   const [showMobileMenu, setShowMobileMenu] = React.useState<boolean>(false);
 
   return (
-    <header className="fixed w-full z-50 bg-background/80 px-4 md:px-8 backdrop-blur">
+    <header className="fixed w-full z-50 bg-background/80 px-4 md:px-8 backdrop-blur-md border-b border-border/40">
       <div className="flex h-18 items-center justify-between py-4">
-        <div className="flex items-center gap-4 md:gap-10">
+        <div className="flex items-center gap-2 md:gap-10">
 
+          {/* 1. Navegação Desktop (Escondida no Mobile) */}
           {props.items?.length ? <DesktopItems items={props.items} /> : null}
 
+          {/* 2. Botão Menu Mobile (Escondido no Desktop) */}
           <Button
             className="space-x-2 md:hidden"
             variant="ghost"
@@ -146,7 +104,14 @@ export function LandingPageHeader(props: NavProps) {
               <Menu className="h-6 w-6" />
             )}
           </Button>
-          {/* <LogoBloco /> */}
+
+          {/* 3. Logo Mobile (Adicionado Aqui) */}
+          {/* A classe 'md:hidden' garante que ele só apareça em telas pequenas.
+              Como ele está DEPOIS do Button no código, ele aparecerá DEPOIS do ícone na tela. */}
+          <div className="md:hidden flex items-center ml-2">
+             <LogoBloco />
+          </div>
+
           {showMobileMenu && props.items && <MobileItems items={props.items} />}
 
         </div>

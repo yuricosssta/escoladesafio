@@ -8,7 +8,7 @@ import { Navbar } from "@/components/Navbar";
 import { AuthInitializer } from "@/lib/redux/AuthInitializer";
 import { Footer } from "@/components/Footer";
 import { SessionExpiredModal } from "@/components/SessionExpiredModal";
-import { LandingPageHeader } from "@/components/LandingPage";
+import { LandingPageHeader } from "@/components/LandingPageHeader";
 // import './global.css'
 
 // const fontSans = Inter({ subsets: ["latin"], variable: "--font-sans" });
@@ -42,13 +42,13 @@ export default function RootLayout({
               items={[
                 { title: "Home", href: "/" },
                 { title: "Criar (provisório)", href: "/posts/new" },
-                { title: "Features", href: "/#features" },
-                { title: "Pricing", href: "/#pricing" },
-                { title: "Github", href: "https://github.com/stack-auth/stack-template", external: true },
+                // { title: "Features", href: "/#features" },
+                // { title: "Pricing", href: "/#pricing" },
+                // { title: "Github", href: "https://github.com/stack-auth/stack-template", external: true },
               ]}
             />
             {children}
-            {/* <Footer /> */}
+            <Footer />
           </ReduxProvider>
         </Providers>
       </body>

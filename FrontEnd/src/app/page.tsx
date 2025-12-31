@@ -1,5 +1,5 @@
 import { Footer } from "@/components/Footer";
-import {LandingPageHeader} from "@/components/LandingPage";
+import {LandingPageHeader} from "@/components/LandingPageHeader";
 import { Navbar } from "@/components/Navbar";
 import { PostList } from "@/components/PostList";
 
@@ -18,7 +18,7 @@ export default function HomePage() {
       /> */}
       <PostList />
       {/* <LandingPage /> */}
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

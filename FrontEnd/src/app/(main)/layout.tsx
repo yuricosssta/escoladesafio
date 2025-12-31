@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
-import { LandingPageHeader } from '@/components/LandingPage';
+import { LandingPageHeader } from '@/components/LandingPageHeader';
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   const isAuthenticated = useSelector(selectIsAuthenticated);
@@ -30,7 +30,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
       {/* <main className="p-8">  */}
       {/* <Navbar /> */}
       {children}
-      <Footer />
+      {/* <Footer /> */}
       {/* </main>       */}
     </div>
   );

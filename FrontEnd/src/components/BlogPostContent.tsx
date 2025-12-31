@@ -1,112 +1,139 @@
-//src/components/BlogPostContent.tsx
+// src/components/BlogPostContent.tsx
 "use client";
 
 import { IPost } from "../types/IPost";
 import Link from "next/link";
-// import Markdown from "react-markdown";
-// import remarkGfm from 'remark-gfm';
-// import MarkdownIt from 'markdown-it';
-// import highlightjs from 'markdown-it-highlightjs';
 import MarkdownPreview from "./MarkdownPreview";
+import { ArrowLeft, Calendar, User, Edit } from "lucide-react";
 
 export const BlogPostContent = ({ post }: { post: IPost | null }) => {
-  if (!post) return <p>Página não encontrada</p>;
-
+  if (!post) {
     return (
-    <div>
-      {/* <div className="max-w-4xl mx-auto px-4 py-8 mb-10 lg:mt-20 break-words"> */}
-        <Link href="/posts" className="btn btn-secondary">
-          &larr; Voltar
+      <div className="min-h-[50vh] flex flex-col items-center justify-center text-muted-foreground">
+        <p className="text-lg">Página não encontrada</p>
+        <Link href="/posts" className="mt-4 text-primary hover:underline">
+          Voltar para o blog
+        </Link>
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-background text-foreground min-h-screen transition-colors duration-300">
+      
+      {/* Container Centralizado */}
+      <div className="max-w-4xl mx-auto px-4 py-12 md:py-20">
+        
+        {/* Botão Voltar */}
+        <Link 
+          href="/posts" 
+          className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-primary transition-colors mb-8 group"
+        >
+          <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform" /> 
+          Voltar para todos os posts
         </Link>
 
-        <h1 className="text-3xl md:text-4xl font-bold tracking-tighter leading-tight mb-4">
-          {post.title}
-        </h1>
-        <img src={post.image} alt={post.title} className="w-full h-auto rounded-lg mt-4" />
-        {/* <article className="prose lg:prose-xl dark:prose-invert max-w-none"> */}
-          <MarkdownPreview markdown={post.content || "Algo deu errado..."} /> 
-        {/* </article> */}
+        {/* Cabeçalho do Post */}
+        <header className="mb-10">
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground leading-tight mb-6">
+            {post.title}
+          </h1>
 
-        <div className="text-sm opacity-40 mt-4">
-          {post.author && <span>Por: {post.author}</span>}
-          {post.created_at &&
-            <span className="ml-4">
-              Atualizado em: {Intl.DateTimeFormat("pt-br").format(
-                new Date(post.modified_at || post.created_at || new Date())
-              )}
-            </span>
-          }
+          {/* Metadados (Autor e Data) */}
+          <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground border-b border-border pb-8">
+            {post.author && (
+              <div className="flex items-center gap-2">
+                <User className="h-4 w-4" />
+                <span>{post.author}</span>
+              </div>
+            )}
+            
+            {(post.modified_at || post.created_at) && (
+              <div className="flex items-center gap-2">
+                <Calendar className="h-4 w-4" />
+                <span>
+                  {Intl.DateTimeFormat("pt-br", { dateStyle: 'long' }).format(
+                    new Date(post.modified_at || post.created_at || new Date())
+                  )}
+                </span>
+              </div>
+            )}
+          </div>
+        </header>
+
+        {/* Imagem de Capa */}
+        <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-border bg-muted mb-10 shadow-sm">
+           <img 
+             src={post.image || "https://placehold.co/1200x600"} 
+             alt={post.title} 
+             className="w-full h-full object-cover" 
+           />
         </div>
-        <Link href={`/posts/${post._id}/edit`} className="btn btn-secondary">
-          Editar
-        </Link>
 
+        {/* CONTEÚDO DO MARKDOWN 
+            A classe 'typography' aplica os estilos globais que definimos no globals.css 
+            (cores de h1, h2, p, a, blockquote, etc).
+        */}
+        <article className="typography max-w-none">
+          <MarkdownPreview markdown={post.content || "Sem conteúdo disponível."} /> 
+        </article>
+
+        {/* Rodapé do Post (Botão Editar) */}
+        <div className="mt-16 pt-8 border-t border-border">
+          <Link 
+            href={`/posts/${post._id}/edit`} 
+            className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 px-4 py-2"
+          >
+            <Edit className="mr-2 h-4 w-4" />
+            Editar este post
+          </Link>
+        </div>
+
+      </div>
     </div>
   );
 };
 
+// //src/components/BlogPostContent.tsx
 // "use client";
 
 // import { IPost } from "../types/IPost";
 // import Link from "next/link";
-// import ReactMarkdown from 'react-markdown';
-// import remarkGfm from 'remark-gfm';
-// import { useEffect, useState } from 'react'; // Importar para a formatação de data segura
+// import MarkdownPreview from "./MarkdownPreview";
 
 // export const BlogPostContent = ({ post }: { post: IPost | null }) => {
-//   // Estado para garantir que a formatação de data só ocorra no cliente
-//   const [isClient, setIsClient] = useState(false);
-//   useEffect(() => {
-//     setIsClient(true);
-//   }, []);
+//   if (!post) return <p>Página não encontrada</p>;
 
-//   if (!post) {
-//     return <p className="text-center mt-10">Página não encontrada</p>;
-//   }
-
-//   const displayDate = post.modified_at || post.created_at;
-
-//   return (
-//     // 1. O contêiner principal agora só cuida do layout (sem "prose")
-//     <div className="max-w-4xl mx-auto px-4 py-8 break-words">
-//       <div className="mb-6">
-//         <Link href="/posts" className="text-blue-500 hover:underline">
-//           &larr; Voltar para todos os posts
+//     return (
+//     <div>
+//       {/* <div className="max-w-4xl mx-auto px-4 py-8 mb-10 lg:mt-20 break-words"> */}
+//         <Link href="/posts" className="btn btn-secondary">
+//           &larr; Voltar
 //         </Link>
-//       </div>
 
-//       {/* 2. Agora os estilos deste H1 funcionarão perfeitamente */}
-//       <h1 className="text-3xl md:text-4xl font-bold tracking-tighter leading-tight mb-4">
-//         {post.title}
-//       </h1>
-      
-//       {/* Informações do Post */}
-//       <div className="text-sm text-gray-500 mb-8">
-//         {post.author && <span>Por: {post.author}</span>}
-//         {displayDate && isClient && (
-//           <span className="ml-4">
-//             Atualizado em: {new Intl.DateTimeFormat("pt-br").format(new Date(displayDate))}
-//           </span>
-//         )}
-//       </div>
+//         <h1 className="text-3xl md:text-4xl font-bold tracking-tighter leading-tight mb-4">
+//           {post.title}
+//         </h1>
+//         <img src={post.image} alt={post.title} className="w-full h-auto rounded-lg mt-4" />
+//         {/* <article className="prose lg:prose-xl dark:prose-invert max-w-none"> */}
+//           <MarkdownPreview markdown={post.content || "Algo deu errado..."} /> 
+//         {/* </article> */}
 
-//       {post.image && (
-//         <img src={post.image} alt={post.title} className="w-full h-auto rounded-lg mb-8" />
-//       )}
-      
-//       {/* 3. A classe "prose" foi movida para este <article>, envolvendo apenas o Markdown */}
-//       <article className="prose lg:prose-xl dark:prose-invert max-w-none">
-//         <ReactMarkdown remarkPlugins={[remarkGfm]}>
-//           {post.content || ""}
-//         </ReactMarkdown>
-//       </article>
-
-//       {/* Botão de Edição */}
-//       <div className="mt-10 pt-6 border-t">
-//         <Link href={`/posts/${post._id}/edit`} className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
-//           Editar Post
+//         <div className="text-sm opacity-40 mt-4">
+//           {post.author && <span>Por: {post.author}</span>}
+//           {post.created_at &&
+//             <span className="ml-4">
+//               Atualizado em: {Intl.DateTimeFormat("pt-br").format(
+//                 new Date(post.modified_at || post.created_at || new Date())
+//               )}
+//             </span>
+//           }
+//         </div>
+//         <Link href={`/posts/${post._id}/edit`} className="btn btn-secondary">
+//           Editar
 //         </Link>
-//       </div>
+
 //     </div>
 //   );
 // };
+
