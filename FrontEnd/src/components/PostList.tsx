@@ -75,7 +75,9 @@ export const PostList = () => {
               </div>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <div className="font-medium">
-                  {post.author} | Publicado em
+                  {post.author} | Publicado em {Intl.DateTimeFormat("pt-br", { dateStyle: 'long' }).format(
+                    new Date(post.modified_at || post.created_at || new Date())
+                  )}
                 </div>
               </div>
               <Link 

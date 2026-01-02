@@ -1,13 +1,19 @@
 // src/components/PostForm.tsx
 "use client";
 
-import { useState, FormEvent, useEffect } from 'react';
+import { useState, FormEvent, useEffect, use } from 'react';
 import { IPost } from '@/types/IPost';
 import MarkdownPreview from './MarkdownPreview';
 // import markdownExample from '@/lib/markdownExample'; // Se não estiver usando, pode remover ou descomentar
 import { AudioTranscriber } from './AudioTranscriber';
 import { summarizeTextAPI } from '@/lib/api/summaryService';
-import { Wand2, Save } from 'lucide-react'; // Adicionei ícones para melhorar a UX
+import { Wand2, Save, User } from 'lucide-react'; // Adicionei ícones para melhorar a UX
+import { userAgent } from 'next/server';
+import { selectCurrentUser } from '@/lib/redux/slices/authSlice';
+import { useSelector } from 'react-redux';
+import markdownExample from '@/lib/markdownExample';
+
+
 
 interface PostFormProps {
   onSubmit: (post: Omit<IPost, 'id'> | IPost) => void;
@@ -16,16 +22,34 @@ interface PostFormProps {
 }
 
 export default function PostForm({ onSubmit, initialData, isLoading }: PostFormProps) {
+  const user = useSelector(selectCurrentUser);
+
+  const getAuthorName = () => {
+     if (initialData?.author) return initialData.author;
+     if (user?.name) return user.name;
+     // Fallback: Se não tiver nome, pega a parte antes do @ do email, ou "Anônimo"
+     if (user?.email) return user.email.split('@')[0]; 
+     return '';
+  };
+  
   const [post, setPost] = useState({
     title: '',
     image: '',
     description: '',
     content: '',
     published: true,
+    author: getAuthorName(),
   });
 
   const [isLoadingText, setIsLoadingText] = useState<boolean>(false);
   const [organizeError, setOrganizeError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (user && !post.author) {
+        const fallbackName = user.name || user.email.split('@')[0];
+        setPost(prev => ({ ...prev, author: fallbackName }));
+    }
+  }, [user, post.author]);
 
   useEffect(() => {
     if (initialData) {
@@ -35,9 +59,10 @@ export default function PostForm({ onSubmit, initialData, isLoading }: PostFormP
         description: initialData.description || '',
         content: initialData.content,
         published: initialData.published !== undefined ? initialData.published : true,
+        author: initialData.author || user?.name || '', 
       });
     }
-  }, [initialData]);
+  }, [initialData, user]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
@@ -52,7 +77,14 @@ export default function PostForm({ onSubmit, initialData, isLoading }: PostFormP
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    onSubmit(initialData ? { ...initialData, ...post } : post);
+
+    const postDataToSubmit = {
+        ...post,
+        author: post.author || user?.name || 'Autor Desconhecido'
+    };
+
+    onSubmit(initialData ? { ...initialData, ...postDataToSubmit } : postDataToSubmit);
+    // onSubmit(initialData ? { ...initialData, ...post } : post);
   };
 
   const organizaTexto = async (e: React.MouseEvent) => {
@@ -84,11 +116,11 @@ export default function PostForm({ onSubmit, initialData, isLoading }: PostFormP
 
   return (
     <form onSubmit={handleSubmit} className="space-y-8 bg-card p-6 rounded-xl border border-border shadow-sm">
-      
+
       {/* Campo Título */}
       <div className="space-y-2">
         <label htmlFor="title" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-foreground">
-            Título
+          Título
         </label>
         <input
           type="text"
@@ -105,7 +137,7 @@ export default function PostForm({ onSubmit, initialData, isLoading }: PostFormP
       {/* Campo Imagem */}
       <div className="space-y-2">
         <label htmlFor="image" className="text-sm font-medium leading-none text-foreground">
-            URL da Imagem
+          URL da Imagem
         </label>
         <input
           type="url"
@@ -121,17 +153,17 @@ export default function PostForm({ onSubmit, initialData, isLoading }: PostFormP
       {/* Campo Conteúdo */}
       <div className="space-y-4">
         <div className="flex justify-between items-center">
-            <label htmlFor="content" className="text-sm font-medium leading-none text-foreground">
-                Conteúdo
-            </label>
-            <div className="text-xs text-muted-foreground">
-                Suporta Markdown
-            </div>
+          <label htmlFor="content" className="text-sm font-medium leading-none text-foreground">
+            Conteúdo
+          </label>
+          <div className="text-xs text-muted-foreground">
+            Suporta Markdown
+          </div>
         </div>
-        
+
         {/* Transcritor de Áudio */}
         <div className="p-4 border border-dashed border-border rounded-lg bg-muted/30">
-            <AudioTranscriber />
+          <AudioTranscriber />
         </div>
 
         <textarea
@@ -141,7 +173,8 @@ export default function PostForm({ onSubmit, initialData, isLoading }: PostFormP
           value={post.content}
           onChange={handleChange}
           className={`${inputClass} min-h-[200px] h-auto font-mono`}
-          placeholder="# Comece a escrever aqui..."
+          // placeholder="# Comece a escrever aqui..."
+          defaultValue={markdownExample()}
           required
         />
 
@@ -157,11 +190,11 @@ export default function PostForm({ onSubmit, initialData, isLoading }: PostFormP
             <Wand2 size={16} />
             {isLoadingText ? 'Organizando...' : 'Organizar conteúdo com IA'}
           </button>
-          
+
           {organizeError && (
-              <div className="p-3 text-sm text-destructive-foreground bg-destructive/10 border border-destructive/20 rounded-md">
-                  {organizeError}
-              </div>
+            <div className="p-3 text-sm text-destructive-foreground bg-destructive/10 border border-destructive/20 rounded-md">
+              {organizeError}
+            </div>
           )}
         </div>
       </div>
@@ -170,19 +203,19 @@ export default function PostForm({ onSubmit, initialData, isLoading }: PostFormP
 
       {/* Dicas e Preview */}
       <div className="space-y-4">
-          <div className="flex justify-between items-center">
-             <p className="text-sm font-medium text-foreground">Prévia do conteúdo:</p>
-             <a href="https://www.markdownguide.org/cheat-sheet/" target="_blank" rel="noopener noreferrer" className="text-xs text-primary hover:underline">
-                Dicas de Markdown
-             </a>
+        <div className="flex justify-between items-center">
+          <p className="text-sm font-medium text-foreground">Prévia do conteúdo:</p>
+          <a href="https://www.markdownguide.org/cheat-sheet/" target="_blank" rel="noopener noreferrer" className="text-xs text-primary hover:underline">
+            Dicas de Markdown
+          </a>
+        </div>
+
+        {/* Caixa de Preview com a classe typography */}
+        <div className="rounded-md border border-border bg-background p-6 min-h-[150px]">
+          <div className="typography">
+            <MarkdownPreview markdown={post.content || "*A prévia aparecerá aqui...*"} />
           </div>
-          
-          {/* Caixa de Preview com a classe typography */}
-          <div className="rounded-md border border-border bg-background p-6 min-h-[150px]">
-              <div className="typography">
-                 <MarkdownPreview markdown={post.content || "*A prévia aparecerá aqui...*"} />
-              </div>
-          </div>
+        </div>
       </div>
 
       {/* Checkbox Publicado */}

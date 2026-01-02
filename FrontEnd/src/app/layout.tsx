@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ReduxProvider } from "@/lib/redux/ReduxProvider";
+import { ReduxProvider } from "@/providers/ReduxProvider";
 import { cn } from "../lib/utils";
-import { Providers } from "./providers";
+import { ThemeProvider } from "../providers/ThemeProvider";
 import { Navbar } from "@/components/Navbar";
-import { AuthInitializer } from "@/lib/redux/AuthInitializer";
+import  AuthInitializer  from "@/providers/AuthInitializer";
 import { Footer } from "@/components/Footer";
 import { SessionExpiredModal } from "@/components/SessionExpiredModal";
 import { LandingPageHeader } from "@/components/LandingPageHeader";
+import AuthProvider from "@/providers/AuthProvider";
 // import './global.css'
 
 // const fontSans = Inter({ subsets: ["latin"], variable: "--font-sans" });
@@ -33,24 +34,27 @@ export default function RootLayout({
         // "min-h-screen bg-backgroud font-sans antialiased max-w-6xl m-auto", 
         // fontSans.variable
       )}>
-        <Providers>
+        <ThemeProvider>
           <ReduxProvider>
-            <AuthInitializer />
-            {/* <SessionExpiredModal /> */}
-            {/* <Navbar /> */}
-            <LandingPageHeader
-              items={[
-                { title: "Home", href: "/" },
-                { title: "Criar (provisório)", href: "/posts/new" },
-                // { title: "Features", href: "/#features" },
-                // { title: "Pricing", href: "/#pricing" },
-                // { title: "Github", href: "https://github.com/stack-auth/stack-template", external: true },
-              ]}
-            />
-            {children}
-            <Footer />
+            {/* <AuthProvider> */}
+              <AuthInitializer>
+                {/* <SessionExpiredModal /> */}
+                {/* <Navbar /> */}
+                <LandingPageHeader
+                  items={[
+                    { title: "Home", href: "/" },
+                    { title: "Criar (provisório)", href: "/posts/new" },
+                    // { title: "Features", href: "/#features" },
+                    // { title: "Pricing", href: "/#pricing" },
+                    // { title: "Github", href: "https://github.com/stack-auth/stack-template", external: true },
+                  ]}
+                />
+                {children}
+                <Footer />
+              </AuthInitializer>
+            {/* </AuthProvider> */}
           </ReduxProvider>
-        </Providers>
+        </ThemeProvider>
       </body>
 
     </html>

@@ -2,18 +2,18 @@
 
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setAuthState } from './slices/authSlice';
-import { fetchUserProfile } from './slices/userSlice';
-import { AppDispatch, RootState } from './store';
+import { setAuthState } from '../lib/redux/slices/authSlice';
+import { fetchUserProfile } from '../lib/redux/slices/userSlice';
+import { AppDispatch, RootState } from '../lib/redux/store';
 
-export function AuthInitializer() {
+export default function AuthInitializer({ children }: { children: React.ReactNode }) {
   // const dispatch = useDispatch();
 
   const dispatch = useDispatch<AppDispatch>();
   const { profile, status, error } = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
-    // Este código só roda no navegador
+    // Este código só roda no navegador 
     const token = localStorage.getItem('token');
     if (token) {
       // dispatch(setAuthState({ token, isAuthenticated: true }));
@@ -37,5 +37,5 @@ export function AuthInitializer() {
   //   return <div>Nenhum perfil encontrado.</div>;
   // }
 
-  return null; // Este componente não renderiza nada na tela
+  return <>{children}</>; // Este componente não renderiza nada na tela
 }

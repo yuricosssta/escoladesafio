@@ -30,7 +30,7 @@ export const BlogPostContent = ({ post }: { post: IPost | null }) => {
           className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-primary transition-colors mb-8 group"
         >
           <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform" /> 
-          Voltar para todos os posts
+          Voltar para todos
         </Link>
 
         {/* Cabeçalho do Post */}
@@ -62,7 +62,7 @@ export const BlogPostContent = ({ post }: { post: IPost | null }) => {
         </header>
 
         {/* Imagem de Capa */}
-        <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-border bg-muted mb-10 shadow-sm">
+        <div className="relative  w-full overflow-hidden rounded-xl border border-border bg-muted mb-10 shadow-sm">
            <img 
              src={post.image || "https://placehold.co/1200x600"} 
              alt={post.title} 

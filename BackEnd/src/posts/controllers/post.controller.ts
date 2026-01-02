@@ -104,7 +104,7 @@ export class PostController {
   }
 
   @UseGuards(AuthGuard)
-  @Post()
+  @Post() 
   async createPost(@Body(new ZodValidationPipe(createPostSchema))
   { title, description, content, image, author }: CreatePost
   ) {
@@ -117,7 +117,7 @@ export class PostController {
       created_at: new Date(),
       modified_at: new Date(),
       image,
-      author: "teste",//user.name, //colocar o nome do autor automaticamente
+      author,//user.name, //colocar o nome do autor automaticamente
       published: true,
     });
   }

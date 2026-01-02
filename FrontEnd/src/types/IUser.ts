@@ -1,7 +1,7 @@
 export enum UserRule {
   Admin,      // 0
-  Teacher,    // 1
-  Student     // 2
+  Organization,    // 1
+  Project     // 2
 }
 
 export interface IUser {

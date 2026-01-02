@@ -12,7 +12,7 @@ const NextThemeProvider = dynamic(
 
 const queryClient = new QueryClient(); 
 
-export const Providers = ({ children }: { children: React.ReactNode }) => {
+export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <NextThemeProvider
       attribute="class"

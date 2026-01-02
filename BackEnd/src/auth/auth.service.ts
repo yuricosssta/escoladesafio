@@ -1,3 +1,4 @@
+// BackEnd/src/auth/auth.service.ts
 import * as bcrypt from 'bcryptjs';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/services/user.service';
@@ -25,7 +26,8 @@ export class AuthService {
       throw new UnauthorizedException();
     }
     const payload = { 
-      sub: user.id, 
+      sub: user.id,
+      name: user.name, 
       email: user.email,
       role: user.rule // substituir esse no 'rule' pelo 'role' no futuro
     };

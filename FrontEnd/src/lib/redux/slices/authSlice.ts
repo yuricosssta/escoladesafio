@@ -6,8 +6,10 @@ import { jwtDecode } from 'jwt-decode';
 
 interface UserPayload {
   sub: string;
+  name: string;
   email: string;
   role: string;
+  [key: string]: any;
 }
 
 interface AuthResponse {
@@ -32,6 +34,26 @@ const initialState: AuthState = {
   sessionExpired: false,
 };
 
+// Função auxiliar para decodificar com segurança
+const safeDecode = (token: string): UserPayload | null => {
+  try {
+    const decoded = jwtDecode<UserPayload>(token);
+
+    // DEBUG: Veja no console o que realmente tem no seu token
+    console.log("Token Decodificado (Payload):", decoded);
+
+    // FALLBACK: Se o backend não mandou 'name', usa a parte do email antes do @
+    if (!decoded.name && decoded.email) {
+      decoded.name = decoded.email.split('@')[0];
+    }
+
+    return decoded;
+  } catch (error) {
+    console.error("Erro ao decodificar token:", error);
+    return null;
+  }
+};
+
 export const loginUser = createAsyncThunk<AuthResponse, { email: string; password: string }>(
   'auth/loginUser', //nome da ação
   async (credentials) => {
@@ -51,7 +73,7 @@ const authSlice = createSlice({
       if (token) {
         state.token = token;
         state.isAuthenticated = true;
-        state.user = jwtDecode<UserPayload>(token);
+        state.user = safeDecode(token);
       } else {
         state.token = null;
         state.isAuthenticated = false;
@@ -63,14 +85,15 @@ const authSlice = createSlice({
       localStorage.removeItem('token');
       // state.token = null;
       // state.isAuthenticated = false;
-      // state.user = null;
+      state.user = null;
       return initialState;
     },
-    
+
     sessionExpired: (state) => {
       state.sessionExpired = true;
       state.isAuthenticated = false;
       state.token = null;
+      state.user = null;
     },
   },
   extraReducers: (builder) => {
@@ -84,11 +107,13 @@ const authSlice = createSlice({
         state.token = token;
         state.isAuthenticated = true;
         localStorage.setItem('token', token); // Armazena o token no localStorage
-        state.user = jwtDecode<UserPayload>(token);
+        state.user = safeDecode(token);
+        // state.user = jwtDecode<UserPayload>(token);
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
+        console.error('Erro ao fazer login:', action.error.message);
       });
   },
 });
